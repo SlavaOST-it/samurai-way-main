@@ -13,8 +13,11 @@ function MyPosts() {
             </div>
 
             <div className={s.posts}>
-                <Post/>
+                <Post message={"Hi bibi"} like={1}/>
+                <Post message={"Jjjfff "} like={5}/>
+                <Post message={"Oooo bibi"} like={10}/>
             </div>
+
         </div>
 
     );

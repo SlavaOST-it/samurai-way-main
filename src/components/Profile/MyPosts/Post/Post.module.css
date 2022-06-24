@@ -1,5 +1,16 @@
-.item img{
+.item {
+    display: flex;
+    align-items: center;
+    margin: 10px 0 10px 0;
+}
+
+.item img {
     max-width: 50px;
     border-radius: 50px;
+}
+
+
+.text {
+    margin-left: 20px;
 }
 
