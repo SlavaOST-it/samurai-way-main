@@ -1,0 +1,13 @@
+.navbar {
+    grid-area: n;
+    margin-right: 15px;
+}
+
+.navbar_link li {
+    margin: 20px 0 20px 0;
+}
+
+.navbar_link a{
+    color: black;
+    font-size: 18px;
+}

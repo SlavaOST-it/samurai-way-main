@@ -1,0 +1,17 @@
+.header {
+
+    grid-area: h;
+    background-color: #343434;
+    margin-bottom: 15px;
+    padding: 20px 0 20px 0;
+
+}
+
+.header_logo {
+
+}
+
+.header_name{
+    color: white;
+
+}

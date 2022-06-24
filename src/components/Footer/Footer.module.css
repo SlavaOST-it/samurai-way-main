@@ -1,0 +1,10 @@
+.footer {
+    grid-area: f;
+
+    position: fixed;
+    bottom: 0;
+
+    background-color: #343434;
+
+    padding: 20px 0 20px 0;
+}
