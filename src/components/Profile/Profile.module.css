@@ -1,5 +1,9 @@
 .content {
     grid-area: c;
+
+    background-color: rgba(204, 210, 229, 0.81);
+    padding: 15px;
+    border-radius: 5px;
 }
 
 .content_logo img{
