@@ -1,15 +1,16 @@
 import React from 'react';
 import s from './Navbar.module.css';
 
+
 const Navbar = () => {
     return (
         <nav className={s.navbar}>
             <ul className={s.navbar_link}>
                 <li>
-                    <a href="src/components/Navbar/Navbar#">Profile</a>
+                    <a href="/profile">Profile</a>
                 </li>
                 <li>
-                    <a href="src/components/Navbar/Navbar#">Masseges</a>
+                    <a href="/dialogs">Messages</a>
                 </li>
                 <li>
                     <a href="src/components/Navbar/Navbar#">News</a>

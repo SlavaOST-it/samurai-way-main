@@ -3,7 +3,7 @@ import s from "./MyPosts.module.css";
 import Post from "./Post/Post";
 
 
-function MyPosts() {
+const MyPosts = () =>{
     return (
         <div className={s.myPosts}>
 
@@ -13,9 +13,9 @@ function MyPosts() {
             </div>
 
             <div className={s.posts}>
-                <Post message={"Hi bibi"} like={1}/>
-                <Post message={"Jjjfff "} like={5}/>
-                <Post message={"Oooo bibi"} like={10}/>
+                <Post message={"Do you like me?"} like={1}/>
+                <Post message={"What it is?"} like={5}/>
+                <Post message={"Oooo ha ha ha lool"} like={10}/>
             </div>
 
         </div>

@@ -1,11 +1,15 @@
 import React from 'react';
 import s from './Footer.module.css';
 
-function Footer() {
+const Footer = () => {
     return (
         <footer className={s.footer}>
-            <div>
+            <div className={s.name}>
                 Social Network. 2022
+            </div>
+
+            <div className={s.logo}>
+
             </div>
         </footer>
     );

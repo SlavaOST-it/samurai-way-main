@@ -1,6 +1,7 @@
-.navbar {
+.navbar{
     grid-area: n;
     margin-right: 15px;
+
 
     background-color: #ff8e8e;
     border-radius: 5px;
