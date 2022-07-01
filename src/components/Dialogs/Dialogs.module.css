@@ -6,8 +6,7 @@
 
 .dialogs_items {
 
-    padding: 10px;
-    text-align: center
+    text-align: left;
 
 }
 
@@ -16,6 +15,15 @@
     margin: 10px;
     padding: 10px;
     font-weight: 600;
+
+
+}
+
+.active {
+    border: black solid 1px;
+    border-radius: 5px;
+    padding: 5px;
+    box-shadow: 0 0 5px 1px;
 }
 
 .messages {
@@ -26,9 +34,3 @@
 
 }
 
-.active {
-    border: black solid 1px;
-    border-radius: 5px;
-    padding: 5px;
-    box-shadow: 0 0 5px 1px;
-}
