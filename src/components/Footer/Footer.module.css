@@ -1,12 +1,13 @@
 .footer {
     grid-area: f;
 
-    position: absolute;
-    bottom: 0;
+    /*position: absolute;*/
+    /*bottom: 0;*/
     width: 1000px;
 
     background-color: #343434;
     padding: 20px;
+    margin-top: 10px;
     color: white;
 
 
