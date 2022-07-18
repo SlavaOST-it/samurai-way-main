@@ -5,7 +5,8 @@ import {PostsDataType} from "../../../Redux/State";
 
 
 type MyPostsType = {
-    postsData: PostsDataType[]
+    postsData: PostsDataType[],
+    addPost: (postMessage: string) => void
 }
 const MyPosts = (props: MyPostsType) => {
     let messagesPost = props.postsData.map(m => {
@@ -15,7 +16,8 @@ const MyPosts = (props: MyPostsType) => {
     let newPostElement = React.createRef<HTMLTextAreaElement>()
 
     const addPostHandler = () => {
-        alert(newPostElement.current?.value)
+        if (newPostElement.current)
+        props.addPost(newPostElement.current.value)
     }
 
     return (

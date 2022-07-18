@@ -14,6 +14,7 @@ import SideBar from "./components/Navbar/SideBar";
 
 type AppType = {
     state: StateType
+    addPost: (postMessage: string) => void  // ЗАМЕНИТЬ ANY !!!!!
 }
 
 const App = (props: AppType) => {
@@ -23,13 +24,14 @@ const App = (props: AppType) => {
                 <Header/>
                 <Navbar sidebar={props.state.sidebar.friends}/>
                 <div className="wrapper-navbar">
-                    <Route path='/profile' render={() => <Profile postsData={props.state.profilePage.posts}/>}/>
+                    <Route path='/profile' render={() => <Profile addPost={props.addPost} postsData={props.state.profilePage.posts}/>}/>
                     <Route path='/dialogs'
-                           render={() => <Dialogs dialogsData={props.state.messagesPage.dialogs} messagesData={props.state.messagesPage.messages}/>}/>
+                           render={() => <Dialogs dialogsData={props.state.messagesPage.dialogs}
+                                                  messagesData={props.state.messagesPage.messages}/>}/>
                     <Route path='/news' render={() => <News/>}/>
                     <Route path='/music' render={() => <Music/>}/>
                     <Route path='/settings' render={() => <Settings/>}/>
-                    <Route path='sidebar' render={()=> <SideBar sidebar={props.state.sidebar.friends}/>}/>
+                    <Route path='sidebar' render={() => <SideBar sidebar={props.state.sidebar.friends}/>}/>
                 </div>
                 <Footer/>
             </div>
