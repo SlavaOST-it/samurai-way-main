@@ -26,3 +26,16 @@
     padding: 2px;
     box-shadow: 0 0 5px 1px;
 }
+
+.navbar_friends{
+    padding: 50px;
+    font-weight: 800;
+}
+
+.friends{
+    font-weight: 800;
+}
+
+.friends_logo{
+    width: 30px;
+}

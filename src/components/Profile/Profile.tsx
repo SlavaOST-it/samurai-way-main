@@ -3,10 +3,11 @@ import s from './Profile.module.css'
 import MyPosts from "./MyPosts/MyPosts";
 import '../../App.css';
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {PostsDataType} from "../../index";
+import {PostsDataType} from "../../Redux/State";
+
 
 type ProfileType = {
-    postsData: Array<PostsDataType>
+    postsData: PostsDataType[]
 }
 const Profile = (props: ProfileType) => {
     return (

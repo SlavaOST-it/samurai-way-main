@@ -9,26 +9,27 @@ import {BrowserRouter, Route} from "react-router-dom";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
-import {DialogsDataType, MessagesDataType, PostsDataType} from "./index";
+import {StateType} from "./Redux/State";
+import SideBar from "./components/Navbar/SideBar";
 
 type AppType = {
-    dialogsData: Array<DialogsDataType>,
-    messagesData: Array<MessagesDataType>,
-    postsData: Array<PostsDataType>
+    state: StateType
 }
+
 const App = (props: AppType) => {
     return (
         <BrowserRouter>
             <div className="container">
                 <Header/>
-                <Navbar/>
+                <Navbar sidebar={props.state.sidebar.friends}/>
                 <div className="wrapper-navbar">
-                    <Route path='/profile' render={() => <Profile postsData={props.postsData}/>}/>
+                    <Route path='/profile' render={() => <Profile postsData={props.state.profilePage.posts}/>}/>
                     <Route path='/dialogs'
-                           render={() => <Dialogs dialogsData={props.dialogsData} messagesData={props.messagesData}/>}/>
+                           render={() => <Dialogs dialogsData={props.state.messagesPage.dialogs} messagesData={props.state.messagesPage.messages}/>}/>
                     <Route path='/news' render={() => <News/>}/>
                     <Route path='/music' render={() => <Music/>}/>
                     <Route path='/settings' render={() => <Settings/>}/>
+                    <Route path='sidebar' render={()=> <SideBar sidebar={props.state.sidebar.friends}/>}/>
                 </div>
                 <Footer/>
             </div>
