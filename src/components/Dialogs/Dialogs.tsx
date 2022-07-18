@@ -2,43 +2,30 @@ import React from 'react';
 import s from './Dialogs.module.css'
 import Message from "./Message/Message";
 import DialogItem from "./DialogItem/DialogItem";
-import {DialogsDataType, MessagesDataType} from "../../index";
-
-
-
+import {DialogsDataType, MessagesDataType} from "../../Redux/State";
+import logoSend from "../img/logo/icons-message-email-send.png";
 
 
 type DialogsPropsType ={
-    dialogsData: Array<DialogsDataType>,
-    messagesData: Array<MessagesDataType>
+    dialogsData: DialogsDataType[],
+    messagesData: MessagesDataType[]
 }
 
 
 const Dialogs = (props: DialogsPropsType) => {
 
-   /* let dialogsData = [
-        {id: 1, name: 'Slava'},
-        {id: 2, name: 'Natasha'},
-        {id: 3, name: 'Oleg'},
-        {id: 4, name: 'Luba'},
-        {id: 5, name: 'Alex'},
-    ]*/
-
     let dialogsElements = props.dialogsData.map((d) => {
         return <DialogItem name={d.name} id={d.id}/>
     })
 
-    /*let messagesData = [
-        {id: 1, message: 'Hi'},
-        {id: 2, message: 'What is a problem?'},
-        {id: 3, message: 'oh, no men'},
-        {id: 4, message: 'ooops'},
-        {id: 5, message: 'Sorry'},
-    ]*/
-
     let messagesElements = props.messagesData.map(m => {
         return <Message message={m.message}/>
     })
+
+    const newMessageElement = React.createRef<HTMLTextAreaElement>()
+    const addNewMessage = () => {
+        alert(newMessageElement.current?.value)
+    }
 
     return (
         <div className={s.dialogs}>
@@ -48,6 +35,8 @@ const Dialogs = (props: DialogsPropsType) => {
 
             <div className={s.messages}>
                 {messagesElements}
+                <textarea className={s.textArea} ref={newMessageElement}></textarea>
+                <button onClick={addNewMessage}><img className={s.logo_send} src={logoSend} alt={'send'}/></button>
             </div>
         </div>
     )
