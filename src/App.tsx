@@ -14,7 +14,7 @@ import SideBar from "./components/Navbar/SideBar";
 
 type AppType = {
     state: StateType
-    addPost: (postMessage: string) => void  // ЗАМЕНИТЬ ANY !!!!!
+    addPost: (postMessage: string) => void
 }
 
 const App = (props: AppType) => {

@@ -1,3 +1,5 @@
+import {rerenderEntireTree} from "../render";
+
 export type PostsDataType = {
     id: number,
     message: string,
@@ -14,7 +16,7 @@ export type MessagesDataType = {
     message: string
 }
 
-export type FriendsType ={
+export type FriendsType = {
     id: number,
     name: string
 }
@@ -27,7 +29,7 @@ export type MessagesPageType = {
     dialogs: DialogsDataType[],
     messages: MessagesDataType[]
 }
-export type SidebarType ={
+export type SidebarType = {
     friends: FriendsType[]
 }
 export type StateType = {
@@ -73,13 +75,14 @@ let State: StateType = {
     }
 }
 
-export const addPost = (postMessage: string)=>{
+export const addPost = (postMessage: string) => {
     const newPost: PostsDataType = {
         id: new Date().getTime(),
         message: postMessage,
         likesCount: 0
     }
     State.profilePage.posts.push(newPost)
+    rerenderEntireTree(State)
 }
 
 export default State
