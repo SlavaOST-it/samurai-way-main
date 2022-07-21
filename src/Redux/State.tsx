@@ -1,4 +1,6 @@
-import {rerenderEntireTree} from "../render";
+let rerenderEntireTree = ()=>{
+
+}
 
 export type PostsDataType = {
     id: number,
@@ -23,11 +25,13 @@ export type FriendsType = {
 
 export type ProfilePageType = {
     posts: PostsDataType[]
+    newPostText: string
 }
 
 export type MessagesPageType = {
     dialogs: DialogsDataType[],
     messages: MessagesDataType[]
+    newMessageText: string
 }
 export type SidebarType = {
     friends: FriendsType[]
@@ -46,7 +50,8 @@ let State: StateType = {
             {id: 3, message: 'oh, no men', likesCount: 2},
             {id: 4, message: 'Oooo ha ha ha lol', likesCount: 10},
             {id: 5, message: 'Oooo ha ha ha lol', likesCount: 10}
-        ]
+        ],
+        newPostText: ''
     },
 
     messagesPage: {
@@ -64,7 +69,9 @@ let State: StateType = {
             {id: 3, message: 'oh, no men'},
             {id: 4, message: 'ooops'},
             {id: 5, message: 'Sorry hat cat dog free dollars ahaha'}
-        ]
+        ],
+
+        newMessageText: ''
     },
 
     sidebar: {
@@ -74,15 +81,42 @@ let State: StateType = {
         ]
     }
 }
-
-export const addPost = (postMessage: string) => {
+// Добавление постов на стену
+export const addPost = () => {
     const newPost: PostsDataType = {
         id: new Date().getTime(),
-        message: postMessage,
+        message: State.profilePage.newPostText,
         likesCount: 0
     }
     State.profilePage.posts.push(newPost)
-    rerenderEntireTree(State)
+    State.profilePage.newPostText = ''
+    rerenderEntireTree()
+}
+// Изменение текста в новом посте
+export const changeNewTextPost = (newText: string) => {
+    State.profilePage.newPostText = newText;
+    rerenderEntireTree()
 }
 
+// Добавление сообщения в messagesPage
+export const addNewMessage = () => {
+    const newMessage: MessagesDataType = {
+        id: new Date().getTime(),
+        message: State.messagesPage.newMessageText
+    }
+    State.messagesPage.messages.push(newMessage)
+    State.messagesPage.newMessageText = ''
+    rerenderEntireTree()
+}
+
+// Изменение текста в новом сообщении
+export const changeNewMessageText = (newMessage: string)=>{
+    State.messagesPage.newMessageText = newMessage
+    rerenderEntireTree()
+}
+
+
+export const subscribe = (observer: ()=> void) =>{
+    rerenderEntireTree = observer
+}
 export default State
