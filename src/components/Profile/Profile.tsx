@@ -11,10 +11,6 @@ type ProfileType = {
     profilePage: ProfilePageType
     newPostText: string
     dispatch: (action: ActionsTypes) => void
-
-    // addPostCallBack: (postMessage: string) => void
-    // changeNewTextPost: (newText: string) => void
-
 }
 const Profile = (props: ProfileType) => {
     return (
@@ -27,9 +23,6 @@ const Profile = (props: ProfileType) => {
                     postsData={props.profilePage.posts}
                     newPostText={props.profilePage.newPostText}
                     dispatch={props.dispatch}
-
-                    // addPostCallBack={props.addPostCallBack}
-                    // changeNewTextPostCallback={props.changeNewTextPost}
                 />
             </div>
 

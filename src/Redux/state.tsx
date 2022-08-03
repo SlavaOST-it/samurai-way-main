@@ -1,3 +1,7 @@
+import {profileReducer} from "./profile-reducer";
+import {dialogsReducer} from "./dialogs-reducer";
+
+
 export type AddPostActionType = {
     type: "ADD-POST",
     newPostText: string
@@ -69,7 +73,7 @@ export type StateType = {
 
 export type StoreType = {
     _state: StateType
-    _callSubscriber: () => void
+    _callSubscriber: (state: StateType) => void
     subscribe: (observer: () => void) => void
     getState: () => StateType
     dispatch: (action: ActionsTypes) => void
@@ -165,47 +169,11 @@ export const store: StoreType = {
     // },
 
     dispatch(action) {
-        if (action.type === "ADD-POST") {
-            const newPost: PostsDataType = {
-                id: new Date().getTime(),
-                message: this._state.profilePage.newPostText,
-                likesCount: 0
-            }
-            this._state.profilePage.posts.unshift(newPost)
-            this._state.profilePage.newPostText = ''
-            this._callSubscriber()
+        this._state.profilePage = profileReducer(this._state.profilePage, action);
+        this._state.messagesPage = dialogsReducer(this._state.messagesPage, action);
 
-        } else if (action.type === "CHANGE-NEW-TEXT-POST") {
-            this._state.profilePage.newPostText = action.newText;
-            this._callSubscriber()
+        this._callSubscriber(this._state)
 
-        } else if (action.type === "ADD-NEW-MESSAGE") {
-            const newMessage: MessagesDataType = {
-                id: new Date().getTime(),
-                message: this._state.messagesPage.newMessageText
-            }
-            this._state.messagesPage.messages.push(newMessage)
-            this._state.messagesPage.newMessageText = ''
-            this._callSubscriber()
 
-        } else if (action.type === "CHANGE-NEW-MESSAGE-TEXT") {
-            this._state.messagesPage.newMessageText = action.newMessage
-            this._callSubscriber()
-        }
-    },
-
-}
-
-export const addPostAC  = (postText: string):AddPostActionType=>{
-    return{
-        type: "ADD-POST",
-        newPostText: postText
     }
-}
-
-export const changeNewTextPostAC= (event: string): ChangeNewTextPostActionType=>{
-    return{
-        type: "CHANGE-NEW-TEXT-POST",
-        newText: event
-    }
-}
+};

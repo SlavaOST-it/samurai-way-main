@@ -1,16 +1,14 @@
 import React, {ChangeEvent} from 'react';
 import s from "./MyPosts.module.css";
 import Post from "./Post/Post";
-import {ActionsTypes, addPostAC, changeNewTextPostAC, PostsDataType} from "../../../Redux/state";
+import {ActionsTypes, PostsDataType} from "../../../Redux/state";
+import {addPostAC, changeNewTextPostAC} from "../../../Redux/profile-reducer";
 
 
 type MyPostsType = {
     postsData: PostsDataType[],
     newPostText: string
     dispatch: (action: ActionsTypes) => void
-
-    // addPostCallBack: (postMessage: string) => void
-    // changeNewTextPostCallback: (newPostText: string) => void
 }
 
 
@@ -22,12 +20,10 @@ const MyPosts = (props: MyPostsType) => {
 
     const onClickAddPostHandler = () => {
         props.dispatch(addPostAC(props.newPostText))
-        // props.addPostCallBack(props.newPostText)
     }
 
     const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
         props.dispatch(changeNewTextPostAC(e.currentTarget.value))
-        // props.changeNewTextPostCallback(e.currentTarget.value)
     }
     return (
         <div className={s.myPosts}>

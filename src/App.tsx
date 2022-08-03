@@ -15,11 +15,6 @@ import SideBar from "./components/Navbar/SideBar";
 type AppType = {
     state: StateType
     dispatch: (action:ActionsTypes) => void
-    // addPost: (postMessage: string) => void
-    // changeNewTextPost: (newText: string) => void
-    //
-    // addNewMessage: () => void
-    // changeNewMessageText: (newMessage: string) => void
 }
 
 const App = (props: AppType) => {
@@ -37,9 +32,6 @@ const App = (props: AppType) => {
 
                             newPostText={props.state.profilePage.newPostText}
                             dispatch={props.dispatch}
-                            // addPostCallBack={props.addPost}
-                            // changeNewTextPost={props.changeNewTextPost}
-
                         />}
                     />
 
@@ -51,8 +43,6 @@ const App = (props: AppType) => {
 
                                    newMessageText={props.state.messagesPage.newMessageText}
                                    dispatch={props.dispatch}
-                                   // addNewMessage={props.addNewMessage}
-                                   // changeNewMessageText={props.changeNewMessageText}
                                />}/>
 
                     <Route path='/news' render={() => <News/>}/>

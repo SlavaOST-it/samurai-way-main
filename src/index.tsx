@@ -12,10 +12,6 @@ export const rerenderEntireTree= (store: StoreType) => {
             <App
                 state={store.getState()}
                 dispatch={store.dispatch.bind(store)}
-                // changeNewTextPost={store.changeNewTextPost.bind(store)}
-                //
-                // addNewMessage={store.addNewMessage.bind(store)}
-                // changeNewMessageText={store.changeNewMessageText.bind(store)}
             />,
         </BrowserRouter>,
         document.getElementById('root'));
