@@ -192,6 +192,20 @@ export const store: StoreType = {
             this._state.messagesPage.newMessageText = action.newMessage
             this._callSubscriber()
         }
+    },
+
+}
+
+export const addPostAC  = (postText: string):AddPostActionType=>{
+    return{
+        type: "ADD-POST",
+        newPostText: postText
     }
 }
 
+export const changeNewTextPostAC= (event: string): ChangeNewTextPostActionType=>{
+    return{
+        type: "CHANGE-NEW-TEXT-POST",
+        newText: event
+    }
+}
