@@ -1,7 +1,7 @@
 import React from 'react';
 import s from './Navbar.module.css';
 import {NavLink} from "react-router-dom";
-import {FriendsType} from "../../Redux/State";
+import {FriendsType} from "../../Redux/state";
 
 type NavbarType = {
     sidebar: FriendsType[]

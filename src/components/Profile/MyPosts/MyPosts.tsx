@@ -1,26 +1,30 @@
 import React, {ChangeEvent} from 'react';
 import s from "./MyPosts.module.css";
 import Post from "./Post/Post";
-import {PostsDataType} from "../../../Redux/State";
+import {ActionsTypes, PostsDataType} from "../../../Redux/state";
 
 
 type MyPostsType = {
     postsData: PostsDataType[],
-    addPostCallBack: (postMessage: string) => void
     newPostText: string
-    changeNewTextPostCallback: (newPostText: string) => void
+    dispatch: (action: ActionsTypes) => void
+
+    // addPostCallBack: (postMessage: string) => void
+    // changeNewTextPostCallback: (newPostText: string) => void
 }
 const MyPosts = (props: MyPostsType) => {
     let messagesPost = props.postsData.map(m => {
         return <Post message={m.message} like={m.likesCount}/>
     })
 
-    const addPostHandler = () => {
-        props.addPostCallBack(props.newPostText)
+    const onClickAddPostHandler = () => {
+        props.dispatch({type: "ADD-POST", newPostText: props.newPostText})
+        // props.addPostCallBack(props.newPostText)
     }
 
     const onPostChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.changeNewTextPostCallback(e.currentTarget.value)
+        props.dispatch({type: "CHANGE-NEW-TEXT-POST", newText: e.currentTarget.value})
+        // props.changeNewTextPostCallback(e.currentTarget.value)
     }
     return (
         <div className={s.myPosts}>
@@ -29,7 +33,7 @@ const MyPosts = (props: MyPostsType) => {
             </h3>
             <div className={s.newPost}>
                 <textarea value={props.newPostText} onChange={onPostChange}/>
-                <button onClick={addPostHandler}>Add post</button>
+                <button onClick={onClickAddPostHandler}>Add post</button>
             </div>
 
             <div className={s.posts}>

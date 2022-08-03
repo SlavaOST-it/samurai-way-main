@@ -1,5 +1,5 @@
 import React from "react";
-import {FriendsType} from "../../Redux/State";
+import {FriendsType} from "../../Redux/state";
 import DialogItem from "../Dialogs/DialogItem/DialogItem";
 import s from "./Navbar.module.css";
 

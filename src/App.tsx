@@ -9,16 +9,17 @@ import Dialogs from "./components/Dialogs/Dialogs";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
-import {StateType} from "./Redux/State";
+import {ActionsTypes, StateType} from "./Redux/state";
 import SideBar from "./components/Navbar/SideBar";
 
 type AppType = {
     state: StateType
-    addPost: (postMessage: string) => void
-    changeNewTextPost: (newText: string) => void
-
-    addNewMessage: () => void
-    changeNewMessageText: (newMessage: string) => void
+    dispatch: (action:ActionsTypes) => void
+    // addPost: (postMessage: string) => void
+    // changeNewTextPost: (newText: string) => void
+    //
+    // addNewMessage: () => void
+    // changeNewMessageText: (newMessage: string) => void
 }
 
 const App = (props: AppType) => {
@@ -35,8 +36,9 @@ const App = (props: AppType) => {
                             postsData={props.state.profilePage.posts}
 
                             newPostText={props.state.profilePage.newPostText}
-                            addPostCallBack={props.addPost}
-                            changeNewTextPost={props.changeNewTextPost}
+                            dispatch={props.dispatch}
+                            // addPostCallBack={props.addPost}
+                            // changeNewTextPost={props.changeNewTextPost}
 
                         />}
                     />
@@ -48,8 +50,9 @@ const App = (props: AppType) => {
                                    messagesData={props.state.messagesPage.messages}
 
                                    newMessageText={props.state.messagesPage.newMessageText}
-                                   addNewMessage={props.addNewMessage}
-                                   changeNewMessageText={props.changeNewMessageText}
+                                   dispatch={props.dispatch}
+                                   // addNewMessage={props.addNewMessage}
+                                   // changeNewMessageText={props.changeNewMessageText}
                                />}/>
 
                     <Route path='/news' render={() => <News/>}/>
