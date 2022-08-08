@@ -9,10 +9,11 @@ import Dialogs from "./components/Dialogs/Dialogs";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
-import {ActionsTypes, StateType} from "./Redux/store";
+import {ActionsTypes, StateType, StoreType} from "./Redux/store";
 import SideBar from "./components/Navbar/SideBar";
 
 type AppType = {
+    store: StoreType
     state: StateType
     dispatch: (action:ActionsTypes) => void
 }
@@ -27,17 +28,19 @@ const App = (props: AppType) => {
 
                     <Route path='/profile' render={() =>
                         <Profile
-                            profilePage={props.state.profilePage}
-                            postsData={props.state.profilePage.posts}
-
-                            newPostText={props.state.profilePage.newPostText}
-                            dispatch={props.dispatch}
+                            store={props.store}
+                            // profilePage={props.state.profilePage}
+                            // postsData={props.state.profilePage.posts}
+                            //
+                            // newPostText={props.state.profilePage.newPostText}
+                            // dispatch={props.dispatch}
                         />}
                     />
 
                     <Route path='/dialogs'
                            render={() =>
                                <Dialogs
+                                   store={props.store}
                                    dialogsData={props.state.messagesPage.dialogs}
                                    messagesData={props.state.messagesPage.messages}
 

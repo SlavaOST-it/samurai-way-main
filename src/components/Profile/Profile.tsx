@@ -1,16 +1,13 @@
 import React from 'react';
 import s from './Profile.module.css'
-import MyPosts from "./MyPosts/MyPosts";
 import '../../App.css';
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import {ActionsTypes, PostsDataType, ProfilePageType} from "../../Redux/store";
+import {StoreType} from "../../Redux/store";
+import MyPostsContainer from "./MyPosts/MyPostsContainer";
 
 
 type ProfileType = {
-    postsData: PostsDataType[],
-    profilePage: ProfilePageType
-    newPostText: string
-    dispatch: (action: ActionsTypes) => void
+    store: StoreType
 }
 const Profile = (props: ProfileType) => {
     return (
@@ -19,10 +16,8 @@ const Profile = (props: ProfileType) => {
                 <ProfileInfo/>
             </div>
             <div className={s.my_posts}>
-                <MyPosts
-                    postsData={props.profilePage.posts}
-                    newPostText={props.profilePage.newPostText}
-                    dispatch={props.dispatch}
+                <MyPostsContainer
+                    store={props.store}
                 />
             </div>
 

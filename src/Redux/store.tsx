@@ -137,37 +137,6 @@ export const store: StoreType = {
     _callSubscriber() {
     },
 
-    // addPost() {
-    //     const newPost: PostsDataType = {
-    //         id: new Date().getTime(),
-    //         message: this._state.profilePage.newPostText,
-    //         likesCount: 0
-    //     }
-    //     this._state.profilePage.posts.push(newPost)
-    //     this._state.profilePage.newPostText = ''
-    //     this._callSubscriber()
-    // },
-    //
-    // changeNewTextPost(newText: string) {
-    //     this._state.profilePage.newPostText = newText;
-    //     this._callSubscriber()
-    // },
-    //
-    // addNewMessage() {
-    //     const newMessage: MessagesDataType = {
-    //         id: new Date().getTime(),
-    //         message: this._state.messagesPage.newMessageText
-    //     }
-    //     this._state.messagesPage.messages.push(newMessage)
-    //     this._state.messagesPage.newMessageText = ''
-    //     this._callSubscriber()
-    // },
-    //
-    // changeNewMessageText(newMessage: string) {
-    //     this._state.messagesPage.newMessageText = newMessage
-    //     this._callSubscriber()
-    // },
-
     dispatch(action) {
         this._state.profilePage = profileReducer(this._state.profilePage, action);
         this._state.messagesPage = dialogsReducer(this._state.messagesPage, action);
