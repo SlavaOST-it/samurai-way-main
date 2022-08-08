@@ -8,7 +8,7 @@ import Footer from "./components/Footer/Footer";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
-import {ActionsTypes, StateType, StoreType} from "./Redux/store";
+import {StoreType} from "./Redux/store";
 import SideBar from "./components/Navbar/SideBar";
 import DialogsContainer from "./components/DialogsContainer";
 

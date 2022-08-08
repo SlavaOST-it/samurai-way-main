@@ -1,16 +1,17 @@
 import React from "react";
-import {FriendsType} from "../../Redux/store";
+import {StoreType} from "../../Redux/store";
 import DialogItem from "../Dialogs/DialogItem/DialogItem";
 import s from "./Navbar.module.css";
 
 
 type SideBarType = {
-    sidebar: FriendsType[]
+    store: StoreType
 }
 
 export const SideBar = (props: SideBarType) => {
+    let state = props.store.getState().sidebar.friends
 
-    let friendsItem = props.sidebar.map((d) => {
+    let friendsItem = state.map((d) => {
         return <DialogItem name={d.name} id={d.id}/>
     })
 

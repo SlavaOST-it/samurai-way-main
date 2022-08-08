@@ -1,12 +1,9 @@
 import React from 'react';
 import s from './Navbar.module.css';
 import {NavLink} from "react-router-dom";
-import {FriendsType} from "../../Redux/store";
 
-type NavbarType = {
-    sidebar: FriendsType[]
-}
-const Navbar = (props: NavbarType) => {
+
+const Navbar = () => {
     return (
         <nav className={s.navbar}>
             <ul className={s.navbar_link}>
