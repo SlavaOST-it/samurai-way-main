@@ -5,17 +5,16 @@ import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
 import Profile from "./components/Profile/Profile";
 import Footer from "./components/Footer/Footer";
-import Dialogs from "./components/Dialogs/Dialogs";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 import {ActionsTypes, StateType, StoreType} from "./Redux/store";
 import SideBar from "./components/Navbar/SideBar";
+import DialogsContainer from "./components/DialogsContainer";
 
 type AppType = {
     store: StoreType
-    state: StateType
-    dispatch: (action:ActionsTypes) => void
+
 }
 
 const App = (props: AppType) => {
@@ -23,36 +22,28 @@ const App = (props: AppType) => {
         <BrowserRouter>
             <div className="container">
                 <Header/>
-                <Navbar sidebar={props.state.sidebar.friends}/>
+                <Navbar />
+
                 <div className="wrapper-navbar">
 
                     <Route path='/profile' render={() =>
                         <Profile
                             store={props.store}
-                            // profilePage={props.state.profilePage}
-                            // postsData={props.state.profilePage.posts}
-                            //
-                            // newPostText={props.state.profilePage.newPostText}
-                            // dispatch={props.dispatch}
                         />}
                     />
 
                     <Route path='/dialogs'
                            render={() =>
-                               <Dialogs
+                               <DialogsContainer
                                    store={props.store}
-                                   dialogsData={props.state.messagesPage.dialogs}
-                                   messagesData={props.state.messagesPage.messages}
-
-                                   newMessageText={props.state.messagesPage.newMessageText}
-                                   dispatch={props.dispatch}
                                />}/>
 
                     <Route path='/news' render={() => <News/>}/>
                     <Route path='/music' render={() => <Music/>}/>
                     <Route path='/settings' render={() => <Settings/>}/>
                     <Route path='sidebar' render={() =>
-                        <SideBar sidebar={props.state.sidebar.friends}/>}/>
+                        <SideBar store={props.store}/>}/>
+
                 </div>
                 <Footer/>
             </div>

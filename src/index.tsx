@@ -12,9 +12,7 @@ export const rerenderEntireTree= (store: StoreType) => {
         <BrowserRouter>
             <App
                 store={store}
-                state={store.getState()}
-                dispatch={store.dispatch.bind(store)}
-            />,
+            />
         </BrowserRouter>,
         document.getElementById('root'));
 }

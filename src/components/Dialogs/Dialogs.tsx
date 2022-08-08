@@ -2,20 +2,18 @@ import React, {ChangeEvent} from 'react';
 import s from './Dialogs.module.css'
 import Message from "./Message/Message";
 import DialogItem from "./DialogItem/DialogItem";
-import {ActionsTypes, DialogsDataType, MessagesDataType} from "../../Redux/store";
+import {DialogsDataType, MessagesDataType} from "../../Redux/store";
 import logoSend from "../img/logo/icons-message-email-send.png";
-import {addNewMessageAC, changeNewMessageTextAC} from "../../Redux/dialogs-reducer";
+
 
 
 type DialogsPropsType = {
     dialogsData: DialogsDataType[],
     messagesData: MessagesDataType[]
     newMessageText: string
-    dispatch: (action: ActionsTypes) => void
-
-    // addNewMessage: (newMessageText: string) => void
-    // changeNewMessageText: (newMessage: string) => void
-}
+    addNewMessage: ()=>void
+    onChangeNewMessageText: (e: ChangeEvent<HTMLTextAreaElement>) => void
+  }
 
 
 const Dialogs = (props: DialogsPropsType) => {
@@ -30,14 +28,12 @@ const Dialogs = (props: DialogsPropsType) => {
 
     // коллбэк функция которая вызвывает функцию из стейта для добавления сообщения
     const addNewMessage = () => {
-        props.dispatch(addNewMessageAC(props.newMessageText))
-        // props.addNewMessage(props.newMessageText)
+        props.addNewMessage()
     }
 
     // коллбэк функция которая вызвывает функцию из стейта для изменения нового сообщения
     const onChangeNewMessageText = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.dispatch(changeNewMessageTextAC(e.currentTarget.value))
-        // props.changeNewMessageText(e.currentTarget.value)
+        props.onChangeNewMessageText(e)
     }
 
     return (
