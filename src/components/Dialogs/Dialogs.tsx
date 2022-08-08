@@ -2,7 +2,7 @@ import React, {ChangeEvent} from 'react';
 import s from './Dialogs.module.css'
 import Message from "./Message/Message";
 import DialogItem from "./DialogItem/DialogItem";
-import {ActionsTypes, DialogsDataType, MessagesDataType} from "../../Redux/state";
+import {ActionsTypes, DialogsDataType, MessagesDataType} from "../../Redux/store";
 import logoSend from "../img/logo/icons-message-email-send.png";
 import {addNewMessageAC, changeNewMessageTextAC} from "../../Redux/dialogs-reducer";
 

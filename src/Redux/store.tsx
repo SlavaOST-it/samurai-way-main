@@ -173,7 +173,5 @@ export const store: StoreType = {
         this._state.messagesPage = dialogsReducer(this._state.messagesPage, action);
 
         this._callSubscriber(this._state)
-
-
     }
 };
