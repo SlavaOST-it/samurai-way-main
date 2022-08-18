@@ -8,16 +8,11 @@ import Footer from "./components/Footer/Footer";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
-import {StoreType} from "./Redux/store";
 import SideBar from "./components/Navbar/SideBar";
 import DialogsContainer from "./components/DialogsContainer";
 
-type AppType = {
-    store: StoreType
 
-}
-
-const App = (props: AppType) => {
+const App = () => {
     return (
         <BrowserRouter>
             <div className="container">
@@ -27,22 +22,19 @@ const App = (props: AppType) => {
                 <div className="wrapper-navbar">
 
                     <Route path='/profile' render={() =>
-                        <Profile
-                            store={props.store}
-                        />}
+                        <Profile/>}
                     />
 
                     <Route path='/dialogs'
                            render={() =>
                                <DialogsContainer
-                                   store={props.store}
                                />}/>
 
                     <Route path='/news' render={() => <News/>}/>
                     <Route path='/music' render={() => <Music/>}/>
                     <Route path='/settings' render={() => <Settings/>}/>
                     <Route path='sidebar' render={() =>
-                        <SideBar store={props.store}/>}/>
+                        <SideBar />}/>
 
                 </div>
                 <Footer/>
