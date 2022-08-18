@@ -1,8 +1,18 @@
 import React from 'react';
-import {ActionsTypes, AddPostActionType, ChangeNewTextPostActionType, PostsDataType} from "./store";
+import {ActionsTypes, AddPostActionType, ChangeNewTextPostActionType} from "./store";
 
+export type PostsDataType = {
+    id: number,
+    message: string,
+    likesCount: number
+}
 
-let initialState = {
+export type ProfilePageType = {
+    posts: PostsDataType[]
+    newPostText: string
+}
+
+let initialState: ProfilePageType = {
     posts: [
         {id: 1, message: 'Do you like me', likesCount: 1},
         {id: 2, message: 'What it is?', likesCount: 5},
@@ -13,7 +23,9 @@ let initialState = {
     newPostText: ''
 };
 
-export const profileReducer = (state: any = initialState, action: ActionsTypes) => {
+
+
+export const profileReducer = (state: ProfilePageType = initialState, action: ActionsTypes): ProfilePageType => {
     switch (action.type) {
         case "ADD-POST":
             const newPost: PostsDataType = {
