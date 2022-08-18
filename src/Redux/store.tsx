@@ -29,18 +29,18 @@ export type ActionsTypes =
     | ChangeNewMessageTextActionType
 
 
-export type PostsDataType = {
+type PostsDataType = {
     id: number,
     message: string,
     likesCount: number
 }
 
-export type DialogsDataType = {
+type DialogsDataType = {
     id: number,
     name: string
 }
 
-export type MessagesDataType = {
+type MessagesDataType = {
     id: number,
     message: string
 }
@@ -50,12 +50,12 @@ export type FriendsType = {
     name: string
 }
 
-export type ProfilePageType = {
+type ProfilePageType = {
     posts: PostsDataType[]
     newPostText: string
 }
 
-export type MessagesPageType = {
+ type MessagesPageType = {
     dialogs: DialogsDataType[],
     messages: MessagesDataType[]
     newMessageText: string
@@ -77,10 +77,6 @@ export type StoreType = {
     subscribe: (observer: () => void) => void
     getState: () => StateType
     dispatch: (action: ActionsTypes) => void
-    // addPost: () => void
-    // changeNewTextPost: (newText: string) => void
-    // addNewMessage: () => void
-    // changeNewMessageText: (newMessage: string) => void
 
 
 }
