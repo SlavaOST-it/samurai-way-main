@@ -14,7 +14,7 @@ export type MessagesPageType = {
     messages: MessagesType[]
     newMessageText: string
 }
-let initialState = {
+let initialState: MessagesPageType = {
     dialogs: [
         {id: 1, name: 'Slava'},
         {id: 2, name: 'Natasha'},
@@ -32,22 +32,28 @@ let initialState = {
     newMessageText: ''
 }
 
-export type InitialStateType = MessagesPageType
-
-export const dialogsReducer = (state: InitialStateType = initialState, action: ActionsTypes) => {
+export const dialogsReducer = (state: MessagesPageType = initialState, action: ActionsTypes): MessagesPageType => {
     switch (action.type) {
-        case "ADD-NEW-MESSAGE":
+
+        case "CHANGE-NEW-MESSAGE-TEXT": {
+            let copyState = {...state}
+            copyState.newMessageText = action.newMessage.trim()
+            return copyState;
+        }
+
+        case "ADD-NEW-MESSAGE": {
             const newMessage: MessagesType = {
                 id: new Date().getTime(),
-                message: state.newMessageText
+                message: state.newMessageText.trim()
             }
-            state.messages.push(newMessage)
-            state.newMessageText = ''
-            return state;
 
-        case "CHANGE-NEW-MESSAGE-TEXT":
-            state.newMessageText = action.newMessage
-            return state;
+            let copyState = {
+                ...state,
+                messages: [...state.messages, newMessage]
+            }
+            copyState.newMessageText = ""
+            return copyState;
+        }
 
         default:
             return state

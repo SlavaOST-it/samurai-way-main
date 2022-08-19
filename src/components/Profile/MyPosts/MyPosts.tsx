@@ -16,7 +16,7 @@ type MyPostsType = {
 
 const MyPosts = (props: MyPostsType) => {
     let messagesPost = props.posts.map(m => {
-        return <Post message={m.message} like={m.likesCount}/>
+        return <Post key={m.id} message={m.message} like={m.likesCount}/>
     })
 
     const onAddPostHandler = () => {

@@ -1,6 +1,4 @@
 import React from "react";
-import {StoreType} from "../../Redux/store";
-import DialogItem from "../Dialogs/DialogItem/DialogItem";
 import s from "./Navbar.module.css";
 
 

@@ -45,7 +45,7 @@ type MessagesDataType = {
     message: string
 }
 
-export type FriendsType = {
+type FriendsType = {
     id: number,
     name: string
 }
@@ -61,17 +61,17 @@ type ProfilePageType = {
     newMessageText: string
 }
 
-export type SidebarType = {
+type SidebarType = {
     friends: FriendsType[]
 }
 
-export type StateType = {
+type StateType = {
     profilePage: ProfilePageType,
     messagesPage: MessagesPageType,
     sidebar: SidebarType
 }
 
-export type StoreType = {
+ type StoreType = {
     _state: StateType
     _callSubscriber: (state: StateType) => void
     subscribe: (observer: () => void) => void
@@ -81,7 +81,7 @@ export type StoreType = {
 
 }
 
-export const store: StoreType = {
+ const store: StoreType = {
     _state: {
         profilePage: {
             posts: [

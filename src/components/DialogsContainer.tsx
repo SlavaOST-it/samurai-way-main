@@ -1,8 +1,8 @@
 import React, {ChangeEvent} from 'react';
 import Dialogs from "./Dialogs/Dialogs";
-import {addNewMessageAC, changeNewMessageTextAC, InitialStateType} from "../Redux/dialogs-reducer";
+import {addNewMessageAC, changeNewMessageTextAC, MessagesPageType} from "../Redux/dialogs-reducer";
 import {connect} from "react-redux";
-import {StateType} from "../Redux/store";
+
 import {AppStateType} from "../Redux/redux-store";
 import {Dispatch} from "redux";
 
@@ -40,7 +40,7 @@ import {Dispatch} from "redux";
 // }
 
 type MapStatePropsType = {
-    dialogsPage: InitialStateType
+    dialogsPage: MessagesPageType
 }
 type MapDispatchPropsType = {
     addNewMessage: (text: string) => void,

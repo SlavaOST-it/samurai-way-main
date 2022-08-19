@@ -3,12 +3,12 @@ import s from './Dialogs.module.css'
 import Message from "./Message/Message";
 import DialogItem from "./DialogItem/DialogItem";
 import logoSend from "../img/logo/icons-message-email-send.png";
-import {InitialStateType} from "../../Redux/dialogs-reducer";
+import {MessagesPageType} from "../../Redux/dialogs-reducer";
 
 
 
 type DialogsPropsType = {
-    dialogsPage: InitialStateType,
+    dialogsPage: MessagesPageType,
     addNewMessage: (newMessageText: string)=>void,
     onChangeNewMessageText: (e: ChangeEvent<HTMLTextAreaElement>) => void
   }
@@ -16,8 +16,8 @@ type DialogsPropsType = {
 
 const Dialogs = (props: DialogsPropsType) => {
 
-    let dialogsElements = props.dialogsPage.dialogs.map((d) => {
-        return <DialogItem name={d.name} id={d.id}/>
+    let dialogsElements = props.dialogsPage.dialogs.map(d => {
+        return <DialogItem key={d.id} name={d.name} id={d.id}/>
     })
 
     let messagesElements = props.dialogsPage.messages.map(m => {
