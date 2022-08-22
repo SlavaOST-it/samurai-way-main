@@ -1,0 +1,70 @@
+.body {
+
+
+}
+
+.userList {
+    display: flex;
+    /*justify-content: space-between;*/
+    margin: 40px 20px;
+
+}
+
+.block01 {
+    width: 300px;
+
+}
+.logoAndName{
+    display: flex;
+}
+.nameUser{
+    font-size: 18px;
+    font-weight: bold;
+
+    margin-left: 15px;
+    text-align: center;
+}
+.btn{
+    background-color: #FFFFFF;
+    border: 1px solid #222222;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: #222222;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    margin-left: 10px;
+    margin-top: 7px;
+    outline: none;
+    padding: 5px 5px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+}
+.block02 {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    border: 1px solid black;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.status {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.location {
+
+
+}
+
+.user_logo {
+    width: 70px;
+    height: 70px;
+    border-radius: 50px;
+}
