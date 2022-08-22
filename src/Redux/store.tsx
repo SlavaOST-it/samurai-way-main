@@ -2,86 +2,84 @@ import {profileReducer} from "./profile-reducer";
 import {dialogsReducer} from "./dialogs-reducer";
 
 
-export type AddPostActionType = {
-    type: "ADD-POST",
-    newPostText: string
-}
+// export type AddPostActionType = {
+//     type: "ADD-POST",
+//     newPostText: string
+// }
+//
+// export type ChangeNewTextPostActionType = {
+//     type: "CHANGE-NEW-TEXT-POST",
+//     newText: string
+// }
+//
+// export type AddNewMessageActionType = {
+//     type: "ADD-NEW-MESSAGE",
+//     newMessageText: string
+// }
+//
+// export type ChangeNewMessageTextActionType = {
+//     type: "CHANGE-NEW-MESSAGE-TEXT",
+//     newMessage: string
+// }
 
-export type ChangeNewTextPostActionType = {
-    type: "CHANGE-NEW-TEXT-POST",
-    newText: string
-}
-
-export type AddNewMessageActionType = {
-    type: "ADD-NEW-MESSAGE",
-    newMessageText: string
-}
-
-export type ChangeNewMessageTextActionType = {
-    type: "CHANGE-NEW-MESSAGE-TEXT",
-    newMessage: string
-}
-
-export type ActionsTypes =
-    AddPostActionType
-    | ChangeNewTextPostActionType
-    | AddNewMessageActionType
-    | ChangeNewMessageTextActionType
-
-
-type PostsDataType = {
-    id: number,
-    message: string,
-    likesCount: number
-}
-
-type DialogsDataType = {
-    id: number,
-    name: string
-}
-
-type MessagesDataType = {
-    id: number,
-    message: string
-}
-
-type FriendsType = {
-    id: number,
-    name: string
-}
-
-type ProfilePageType = {
-    posts: PostsDataType[]
-    newPostText: string
-}
-
- type MessagesPageType = {
-    dialogs: DialogsDataType[],
-    messages: MessagesDataType[]
-    newMessageText: string
-}
-
-type SidebarType = {
-    friends: FriendsType[]
-}
-
-type StateType = {
-    profilePage: ProfilePageType,
-    messagesPage: MessagesPageType,
-    sidebar: SidebarType
-}
-
- type StoreType = {
-    _state: StateType
-    _callSubscriber: (state: StateType) => void
-    subscribe: (observer: () => void) => void
-    getState: () => StateType
-    dispatch: (action: ActionsTypes) => void
+// export type ActionsTypes =
+//     AddPostActionType
+//     | ChangeNewTextPostActionType
+//     | AddNewMessageActionType
+//     | ChangeNewMessageTextActionType
 
 
-}
+// type PostsDataType = {
+//     id: number,
+//     message: string,
+//     likesCount: number
+// }
+//
+// type DialogsDataType = {
+//     id: number,
+//     name: string
+// }
+//
+// type MessagesDataType = {
+//     id: number,
+//     message: string
+// }
+//
+// type FriendsType = {
+//     id: number,
+//     name: string
+// }
+//
+// type ProfilePageType = {
+//     posts: PostsDataType[]
+//     newPostText: string
+// }
+//
+//  type MessagesPageType = {
+//     dialogs: DialogsDataType[],
+//     messages: MessagesDataType[]
+//     newMessageText: string
+// }
+//
+// type SidebarType = {
+//     friends: FriendsType[]
+// }
+//
+// type StateType = {
+//     profilePage: ProfilePageType,
+//     messagesPage: MessagesPageType,
+//     sidebar: SidebarType
+// }
 
- const store: StoreType = {
+//  type StoreType = {
+//     _state: StateType
+//     _callSubscriber: (state: StateType) => void
+//     subscribe: (observer: () => void) => void
+//     getState: () => StateType
+//     dispatch: (action: ActionsTypes) => void
+// }
+
+ const store = {
     _state: {
         profilePage: {
             posts: [
@@ -122,21 +120,21 @@ type StateType = {
         }
     },
 
-    subscribe(observer) {
-        this._callSubscriber = observer
-    },
-
-    getState() {
-        return this._state
-    },
-
-    _callSubscriber() {
-    },
-
-    dispatch(action) {
-        this._state.profilePage = profileReducer(this._state.profilePage, action);
-        this._state.messagesPage = dialogsReducer(this._state.messagesPage, action);
-
-        this._callSubscriber(this._state)
-    }
+    // subscribe(observer) {
+    //     this._callSubscriber = observer
+    // },
+    //
+    // getState() {
+    //     return this._state
+    // },
+    //
+    // _callSubscriber() {
+    // },
+    //
+    // dispatch(action) {
+    //     this._state.profilePage = profileReducer(this._state.profilePage, action);
+    //     this._state.messagesPage = dialogsReducer(this._state.messagesPage, action);
+    //
+    //     this._callSubscriber(this._state)
+    // }
 };

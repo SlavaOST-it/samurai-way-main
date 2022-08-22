@@ -1,5 +1,3 @@
-import React from 'react';
-import {ActionsTypes, AddNewMessageActionType, ChangeNewMessageTextActionType} from "./store";
 
 export type DialogsType = {
     id: number,
@@ -31,14 +29,24 @@ let initialState: MessagesPageType = {
     ] as Array<MessagesType>,
     newMessageText: ''
 }
+export type AddNewMessageAT = {
+    type: "ADD-NEW-MESSAGE",
+    newMessageText: string
+}
+export type ChangeNewMessageTextAT = {
+    type: "CHANGE-NEW-MESSAGE-TEXT",
+    newMessage: string
+}
+export type ActionsTypes = AddNewMessageAT | ChangeNewMessageTextAT
 
 export const dialogsReducer = (state: MessagesPageType = initialState, action: ActionsTypes): MessagesPageType => {
     switch (action.type) {
 
         case "CHANGE-NEW-MESSAGE-TEXT": {
-            let copyState = {...state}
-            copyState.newMessageText = action.newMessage.trim()
-            return copyState;
+            return ({
+                ...state,
+                newMessageText: action.newMessage
+            })
         }
 
         case "ADD-NEW-MESSAGE": {
@@ -46,13 +54,12 @@ export const dialogsReducer = (state: MessagesPageType = initialState, action: A
                 id: new Date().getTime(),
                 message: state.newMessageText.trim()
             }
-
-            let copyState = {
-                ...state,
-                messages: [...state.messages, newMessage]
-            }
-            copyState.newMessageText = ""
-            return copyState;
+            return ({
+                    ...state,
+                    newMessageText: "",
+                    messages: [...state.messages, newMessage]
+                }
+            )
         }
 
         default:
@@ -60,13 +67,13 @@ export const dialogsReducer = (state: MessagesPageType = initialState, action: A
     }
 };
 
-export const addNewMessageAC = (text: string): AddNewMessageActionType => {
+export const addNewMessageAC = (text: string): AddNewMessageAT => {
     return {
         type: "ADD-NEW-MESSAGE",
         newMessageText: text
     }
 }
-export const changeNewMessageTextAC = (newMessage: string): ChangeNewMessageTextActionType => {
+export const changeNewMessageTextAC = (newMessage: string): ChangeNewMessageTextAT => {
     return {
         type: "CHANGE-NEW-MESSAGE-TEXT",
         newMessage: newMessage
