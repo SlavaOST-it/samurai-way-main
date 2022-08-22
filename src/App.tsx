@@ -9,7 +9,9 @@ import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 import SideBar from "./components/Navbar/SideBar";
-import DialogsContainer from "./components/DialogsContainer";
+import DialogsContainer from "./components/Dialogs/DialogsContainer";
+import Users from "./Users/Users";
+import UsersContainer from "./Users/UsersContainer";
 
 
 const App = () => {
@@ -17,24 +19,25 @@ const App = () => {
         <BrowserRouter>
             <div className="container">
                 <Header/>
-                <Navbar />
+                <Navbar/>
 
                 <div className="wrapper-navbar">
 
-                    <Route path='/profile' render={() =>
-                        <Profile/>}
-                    />
+                    <Route path='/profile'
+                           render={() => <Profile/>}/>
 
                     <Route path='/dialogs'
-                           render={() =>
-                               <DialogsContainer
-                               />}/>
+                           render={() => <DialogsContainer/>}/>
 
                     <Route path='/news' render={() => <News/>}/>
                     <Route path='/music' render={() => <Music/>}/>
+
+                    <Route path={'/users'}
+                           render={() => <UsersContainer/>}/>
+
                     <Route path='/settings' render={() => <Settings/>}/>
-                    <Route path='sidebar' render={() =>
-                        <SideBar />}/>
+                    <Route path='sidebar'
+                           render={() =><SideBar/>}/>
 
                 </div>
                 <Footer/>
