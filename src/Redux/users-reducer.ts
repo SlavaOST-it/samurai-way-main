@@ -1,68 +1,28 @@
+
 export type UsersType = {
-    id: number,
-    photoUser: string
-    followed: boolean,
-    fullName: string,
-    status: string,
-    location: { city: string, country: string }
+    "name": string,
+    "id": number,
+    "uniqueUrlName": null,
+    "photos": {"small": null, "large": null}
+    "status": null,
+    "followed": boolean
+
 }
 export type UsersPageType = {
-    users: UsersType[]
+    "items": UsersType[]
 }
 
 let initialState: UsersPageType = {
-    users: [
-        {
-            id: 1,
-            photoUser: 'https://ichef.bbci.co.uk/news/976/cpsprodpb/2B87/production/_90934111_1-1.jpg',
-            followed: true,
-            fullName: 'Slava',
-            status: 'I am a boss',
-            location: {city: 'Minsk', country: 'Belarus'}
-        },
-        {
-            id: 2,
-            photoUser: 'https://ichef.bbci.co.uk/news/976/cpsprodpb/2B87/production/_90934111_1-1.jpg',
-            followed: true,
-            fullName: 'Natasha',
-            status: 'I am funny',
-            location: {city: 'Warshaw', country: 'Poland'}
-        },
-        {
-            id: 3,
-            photoUser: 'https://ichef.bbci.co.uk/news/976/cpsprodpb/2B87/production/_90934111_1-1.jpg',
-            followed: false,
-            fullName: 'Oleg',
-            status: 'Good day',
-            location: {city: 'Berlin', country: 'Germany'}
-        },
-        {
-            id: 4,
-            photoUser: 'https://ichef.bbci.co.uk/news/976/cpsprodpb/2B87/production/_90934111_1-1.jpg',
-            followed: true,
-            fullName: 'Lubov',
-            status: 'SuperWomen',
-            location: {city: 'Krasovsky', country: 'Belarus'}
-        },
-        {
-            id: 5,
-            photoUser: 'https://ichef.bbci.co.uk/news/976/cpsprodpb/2B87/production/_90934111_1-1.jpg',
-            followed: false,
-            fullName: 'Alex',
-            status: 'I am lazy',
-            location: {city: 'Iye', country: 'Belarus'}
-        },
-
-    ]
+    "items": []
 
 };
 export type FollowAT = {
     type: "FOLLOW",
-    userId: number
+    "userId": number
 }
 export type UnfollowAT = {
     type: "UNFOLLOW",
-    userId: number
+    "userId": number
 }
 export type SetUsersAT = {
     type: "SET_USERS",
@@ -74,7 +34,7 @@ export const usersReducer = (state: UsersPageType = initialState, action: Action
     switch (action.type) {
         case "FOLLOW":
             return {
-                ...state, users: [...state.users.map(u => {
+                ...state, items: [...state.items.map(u => {
                     if (u.id === action.userId) {
                         return {...u, followed: false}
                     }
@@ -84,7 +44,7 @@ export const usersReducer = (state: UsersPageType = initialState, action: Action
 
         case "UNFOLLOW":
             return {
-                ...state, users: [...state.users.map(u => {
+                ...state, items: [...state.items.map(u => {
                     if (u.id === action.userId) {
                         return {...u, followed: true}
                     }
@@ -94,7 +54,7 @@ export const usersReducer = (state: UsersPageType = initialState, action: Action
 
         case "SET_USERS":
             return {
-                ...state, users: [...state.users, ...action.users]
+                ...state, items: [...state.items, ...action.users]
             }
 
         default:
@@ -102,12 +62,12 @@ export const usersReducer = (state: UsersPageType = initialState, action: Action
     }
 };
 
-export const followAC = (userId: number) => {
+export const followAC = (userId: number): FollowAT => {
     return {type: "FOLLOW", userId}
 }
-export const unfollowAC = (userId: number) => {
+export const unfollowAC = (userId: number): UnfollowAT => {
     return {type: "UNFOLLOW", userId}
 }
-export const setUsersAC = (users: UsersPageType) => {
+export const setUsersAC = (users: UsersType[]): SetUsersAT => {
     return {type: "SET_USERS", users}
 }
