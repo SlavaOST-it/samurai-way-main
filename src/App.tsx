@@ -10,7 +10,6 @@ import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 import SideBar from "./components/Navbar/SideBar";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
-import Users from "./Users/Users";
 import UsersContainer from "./Users/UsersContainer";
 
 
