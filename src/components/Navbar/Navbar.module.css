@@ -27,6 +27,10 @@
     box-shadow: 0 0 5px 1px;
 }
 
+.users{
+    margin-top: 50px;
+}
+
 .navbar_friends{
     padding: 50px;
     font-weight: 800;
