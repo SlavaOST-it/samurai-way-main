@@ -1,6 +1,6 @@
-
 export type UsersType = {
     id: number,
+    photoUser: string
     followed: boolean,
     fullName: string,
     status: string,
@@ -14,6 +14,7 @@ let initialState: UsersPageType = {
     users: [
         {
             id: 1,
+            photoUser: 'https://ichef.bbci.co.uk/news/976/cpsprodpb/2B87/production/_90934111_1-1.jpg',
             followed: true,
             fullName: 'Slava',
             status: 'I am a boss',
@@ -21,45 +22,61 @@ let initialState: UsersPageType = {
         },
         {
             id: 2,
+            photoUser: 'https://ichef.bbci.co.uk/news/976/cpsprodpb/2B87/production/_90934111_1-1.jpg',
             followed: true,
             fullName: 'Natasha',
             status: 'I am funny',
             location: {city: 'Warshaw', country: 'Poland'}
         },
-        {id: 3, followed: false, fullName: 'Oleg', status: 'Good day', location: {city: 'Berlin', country: 'Germany'}},
+        {
+            id: 3,
+            photoUser: 'https://ichef.bbci.co.uk/news/976/cpsprodpb/2B87/production/_90934111_1-1.jpg',
+            followed: false,
+            fullName: 'Oleg',
+            status: 'Good day',
+            location: {city: 'Berlin', country: 'Germany'}
+        },
         {
             id: 4,
+            photoUser: 'https://ichef.bbci.co.uk/news/976/cpsprodpb/2B87/production/_90934111_1-1.jpg',
             followed: true,
             fullName: 'Lubov',
             status: 'SuperWomen',
             location: {city: 'Krasovsky', country: 'Belarus'}
         },
-        {id: 5, followed: false, fullName: 'Alex', status: 'I am lazy', location: {city: 'Iye', country: 'Belarus'}},
+        {
+            id: 5,
+            photoUser: 'https://ichef.bbci.co.uk/news/976/cpsprodpb/2B87/production/_90934111_1-1.jpg',
+            followed: false,
+            fullName: 'Alex',
+            status: 'I am lazy',
+            location: {city: 'Iye', country: 'Belarus'}
+        },
 
     ]
 
 };
-export type FollowAT={
+export type FollowAT = {
     type: "FOLLOW",
-    id: number
+    userId: number
 }
-export type UnfollowAT={
+export type UnfollowAT = {
     type: "UNFOLLOW",
-    id: number
+    userId: number
 }
-export type SetUsersAT={
+export type SetUsersAT = {
     type: "SET_USERS",
     users: UsersType[]
 }
-export type ActionsTypes = FollowAT| UnfollowAT|SetUsersAT
+export type ActionsTypes = FollowAT | UnfollowAT | SetUsersAT
 
 export const usersReducer = (state: UsersPageType = initialState, action: ActionsTypes): UsersPageType => {
     switch (action.type) {
         case "FOLLOW":
             return {
                 ...state, users: [...state.users.map(u => {
-                    if (u.id === action.id) {
-                        return {...u, followed: true}
+                    if (u.id === action.userId) {
+                        return {...u, followed: false}
                     }
                     return u
                 })]
@@ -68,8 +85,8 @@ export const usersReducer = (state: UsersPageType = initialState, action: Action
         case "UNFOLLOW":
             return {
                 ...state, users: [...state.users.map(u => {
-                    if (u.id === action.id) {
-                        return {...u, followed: false}
+                    if (u.id === action.userId) {
+                        return {...u, followed: true}
                     }
                     return u
                 })]
@@ -91,6 +108,6 @@ export const followAC = (userId: number) => {
 export const unfollowAC = (userId: number) => {
     return {type: "UNFOLLOW", userId}
 }
-export const setUsers = (users: UsersPageType)=>{
-    return{type: "SET_USERS", users}
+export const setUsersAC = (users: UsersPageType) => {
+    return {type: "SET_USERS", users}
 }
