@@ -15,7 +15,7 @@ import Users from "./Users";
 
 
 
-type UsersAPIComponentType = {
+type UsersContainerType = {
     users: UsersType[],
     pageSize: number,
     totalUsersCount: number,
@@ -34,7 +34,7 @@ export const instance = axios.create({
     }
 });
 
-class UsersAPIComponent extends React.Component<UsersAPIComponentType, UsersAPIComponentType> {
+class UsersContainer extends React.Component<UsersContainerType, UsersContainerType> {
 
     componentDidMount() {
         if (this.props.users.length === 0) {
@@ -113,5 +113,4 @@ let mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
 }
 
 
-const UsersContainer = connect(mapStateToProps, mapDispatchToProps)(UsersAPIComponent)
-export default UsersContainer;
+export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
