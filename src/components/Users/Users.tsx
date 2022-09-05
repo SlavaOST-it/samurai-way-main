@@ -6,9 +6,13 @@ import axios from "axios";
 
 type UsersPropsType = {
     users: UsersType[],
+    pageSize: number,
+    totalUsersCount: number,
+    currentPage: number,
     follow: (userId: number) => void,
     unfollow: (userId: number) => void,
-    setUsers: (users: UsersType[]) => void
+    setUsers: (users: UsersType[]) => void,
+    setCurrentPage: (currentPage: number) => void
 }
 export const instance = axios.create({
     withCredentials: true,
@@ -22,15 +26,32 @@ export class Users extends React.Component<UsersPropsType, UsersPropsType> {
 
     componentDidMount() {
         if (this.props.users.length === 0) {
-            instance.get("https://social-network.samuraijs.com/api/1.0/users").then((response) => {
+            instance.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
+                .then((response) => {
                 this.props.setUsers(response.data.items)
             })
         }
     }
 
+    onPageChanges = (pageNumber: number)=>{
+        this.props.setCurrentPage(pageNumber)
+    }
+
     render() {
+        let pagesCount = Math.ceil(this.props.totalUsersCount / this.props.pageSize);
+        let pages = []
+        for (let i = 1; i <= pagesCount; i++) {
+            pages.push(i)
+        }
+
         return (
             <div className={s.body}>
+                <div className={s.pagesList}>
+                    {pages.map(p=>{
+                        return  <span key={p} className={this.props.currentPage === p ? s.pageSelected : ""}
+                        onClick={()=>{this.onPageChanges(p)}}>{p}</span>
+                    })}
+                </div>
 
                 {this.props.users.map(u => <div key={u.id} className={s.userList}>
 

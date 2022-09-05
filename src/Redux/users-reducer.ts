@@ -9,32 +9,30 @@ export type UsersType = {
 
 }
 export type UsersPageType = {
-    "items": UsersType[]
+    "items": UsersType[],
+    pageSize: number,
+    totalUsersCount: number,
+    currentPage: number
 }
 
 let initialState: UsersPageType = {
-    "items": []
-
+    "items": [],
+    pageSize: 5,
+    totalUsersCount: 20,
+    currentPage: 2
 };
-export type FollowAT = {
-    type: "FOLLOW",
-    "userId": number
-}
-export type UnfollowAT = {
-    type: "UNFOLLOW",
-    "userId": number
-}
-export type SetUsersAT = {
-    type: "SET_USERS",
-    users: UsersType[]
-}
-export type ActionsTypes = FollowAT | UnfollowAT | SetUsersAT
+export type FollowAT = ReturnType<typeof followAC>
+export type UnfollowAT = ReturnType<typeof unfollowAC>
+export type SetUsersAT = ReturnType<typeof setUsersAC>
+export type setCurrentPageAT = ReturnType<typeof setCurrentPageAC>
+export type ActionsTypes = FollowAT | UnfollowAT | SetUsersAT | setCurrentPageAT
 
 export const usersReducer = (state: UsersPageType = initialState, action: ActionsTypes): UsersPageType => {
     switch (action.type) {
         case "FOLLOW":
             return {
-                ...state, items: [...state.items.map(u => {
+                ...state,
+                items: [...state.items.map(u => {
                     if (u.id === action.userId) {
                         return {...u, followed: false}
                     }
@@ -44,7 +42,8 @@ export const usersReducer = (state: UsersPageType = initialState, action: Action
 
         case "UNFOLLOW":
             return {
-                ...state, items: [...state.items.map(u => {
+                ...state,
+                items: [...state.items.map(u => {
                     if (u.id === action.userId) {
                         return {...u, followed: true}
                     }
@@ -52,9 +51,16 @@ export const usersReducer = (state: UsersPageType = initialState, action: Action
                 })]
             }
 
-        case "SET_USERS":
+        case "SET-USERS":
             return {
-                ...state, items: [...state.items, ...action.users]
+                ...state,
+                items: [...state.items, ...action.users]
+            }
+
+        case "SET-CURRENT-PAGE":
+            return {
+                ...state,
+                currentPage: action.currentPage
             }
 
         default:
@@ -62,12 +68,15 @@ export const usersReducer = (state: UsersPageType = initialState, action: Action
     }
 };
 
-export const followAC = (userId: number): FollowAT => {
-    return {type: "FOLLOW", userId}
+export const followAC = (userId: number) => {
+    return {type: "FOLLOW", userId} as const
 }
-export const unfollowAC = (userId: number): UnfollowAT => {
-    return {type: "UNFOLLOW", userId}
+export const unfollowAC = (userId: number)=> {
+    return {type: "UNFOLLOW", userId} as const
 }
-export const setUsersAC = (users: UsersType[]): SetUsersAT => {
-    return {type: "SET_USERS", users}
+export const setUsersAC = (users: UsersType[])=> {
+    return {type: "SET-USERS", users} as const
+}
+export const setCurrentPageAC = (currentPage: number)=>{
+    return{type: "SET-CURRENT-PAGE", currentPage} as const
 }

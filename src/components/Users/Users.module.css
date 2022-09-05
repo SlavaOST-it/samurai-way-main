@@ -68,3 +68,11 @@
     height: 70px;
     border-radius: 50px;
 }
+
+.pagesList span{
+    padding: 0 5px;
+    cursor: pointer;
+}
+.pageSelected{
+    font-weight: bold;
+}
