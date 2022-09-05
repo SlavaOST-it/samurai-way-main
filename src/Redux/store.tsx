@@ -1,5 +1,6 @@
-import {profileReducer} from "./profile-reducer";
-import {dialogsReducer} from "./dialogs-reducer";
+import React from "react";
+// import {profileReducer} from "./profile-reducer";
+// import {dialogsReducer} from "./dialogs-reducer";
 
 
 // export type AddPostActionType = {
@@ -79,46 +80,46 @@ import {dialogsReducer} from "./dialogs-reducer";
 //     dispatch: (action: ActionsTypes) => void
 // }
 
- const store = {
-    _state: {
-        profilePage: {
-            posts: [
-                {id: 1, message: 'Do you like me', likesCount: 1},
-                {id: 2, message: 'What it is?', likesCount: 5},
-                {id: 3, message: 'oh, no men', likesCount: 2},
-                {id: 4, message: 'Oooo ha ha ha lol', likesCount: 10},
-                {id: 5, message: 'Oooo ha ha ha lol', likesCount: 10}
-            ],
-            newPostText: ''
-        },
-
-        messagesPage: {
-            dialogs: [
-                {id: 1, name: 'Slava'},
-                {id: 2, name: 'Natasha'},
-                {id: 3, name: 'Oleg'},
-                {id: 4, name: 'Luba'},
-                {id: 5, name: 'Alex'}
-            ],
-
-            messages: [
-                {id: 1, message: 'Hi'},
-                {id: 2, message: 'What is a problem?'},
-                {id: 3, message: 'oh, no men'},
-                {id: 4, message: 'ooops'},
-                {id: 5, message: 'Sorry hat cat dog free dollars ahaha'}
-            ],
-
-            newMessageText: ''
-        },
-
-        sidebar: {
-            friends: [
-                {id: 2, name: 'Natasha'},
-                {id: 3, name: 'Oleg'},
-            ]
-        }
-    },
+ // const store = {
+ //    _state: {
+ //        profilePage: {
+ //            posts: [
+ //                {id: 1, message: 'Do you like me', likesCount: 1},
+ //                {id: 2, message: 'What it is?', likesCount: 5},
+ //                {id: 3, message: 'oh, no men', likesCount: 2},
+ //                {id: 4, message: 'Oooo ha ha ha lol', likesCount: 10},
+ //                {id: 5, message: 'Oooo ha ha ha lol', likesCount: 10}
+ //            ],
+ //            newPostText: ''
+ //        },
+ //
+ //        messagesPage: {
+ //            dialogs: [
+ //                {id: 1, name: 'Slava'},
+ //                {id: 2, name: 'Natasha'},
+ //                {id: 3, name: 'Oleg'},
+ //                {id: 4, name: 'Luba'},
+ //                {id: 5, name: 'Alex'}
+ //            ],
+ //
+ //            messages: [
+ //                {id: 1, message: 'Hi'},
+ //                {id: 2, message: 'What is a problem?'},
+ //                {id: 3, message: 'oh, no men'},
+ //                {id: 4, message: 'ooops'},
+ //                {id: 5, message: 'Sorry hat cat dog free dollars ahaha'}
+ //            ],
+ //
+ //            newMessageText: ''
+ //        },
+ //
+ //        sidebar: {
+ //            friends: [
+ //                {id: 2, name: 'Natasha'},
+ //                {id: 3, name: 'Oleg'},
+ //            ]
+ //        }
+ //    },
 
     // subscribe(observer) {
     //     this._callSubscriber = observer
@@ -137,4 +138,4 @@ import {dialogsReducer} from "./dialogs-reducer";
     //
     //     this._callSubscriber(this._state)
     // }
-};
+// };

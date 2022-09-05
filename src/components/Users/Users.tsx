@@ -12,7 +12,8 @@ type UsersPropsType = {
     follow: (userId: number) => void,
     unfollow: (userId: number) => void,
     setUsers: (users: UsersType[]) => void,
-    setCurrentPage: (currentPage: number) => void
+    setCurrentPage: (currentPage: number) => void,
+    setUsersTotalCount: (totalCount: number) => void
 }
 export const instance = axios.create({
     withCredentials: true,
@@ -28,13 +29,18 @@ export class Users extends React.Component<UsersPropsType, UsersPropsType> {
         if (this.props.users.length === 0) {
             instance.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
                 .then((response) => {
-                this.props.setUsers(response.data.items)
-            })
+                    this.props.setUsers(response.data.items);
+                    this.props.setUsersTotalCount(response.data.totalCount)
+                })
         }
     }
 
-    onPageChanges = (pageNumber: number)=>{
+    onPageChanges = (pageNumber: number) => {
         this.props.setCurrentPage(pageNumber)
+        instance.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
+            .then((response) => {
+                this.props.setUsers(response.data.items)
+            })
     }
 
     render() {
@@ -47,9 +53,11 @@ export class Users extends React.Component<UsersPropsType, UsersPropsType> {
         return (
             <div className={s.body}>
                 <div className={s.pagesList}>
-                    {pages.map(p=>{
-                        return  <span key={p} className={this.props.currentPage === p ? s.pageSelected : ""}
-                        onClick={()=>{this.onPageChanges(p)}}>{p}</span>
+                    {pages.map(p => {
+                        return <span key={p} className={this.props.currentPage === p ? s.pageSelected : ""}
+                                     onClick={() => {
+                                         this.onPageChanges(p)
+                                     }}>{p}</span>
                     })}
                 </div>
 
