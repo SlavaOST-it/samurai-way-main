@@ -1,7 +1,6 @@
 import React from 'react';
 import './App.css';
 import {BrowserRouter, Route} from "react-router-dom";
-import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import News from "./components/News/News";
@@ -11,13 +10,14 @@ import SideBar from "./components/Navbar/SideBar";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
+import HeaderContainer from "./components/Header/HeaderContainer";
 
 
 const App = () => {
     return (
         <BrowserRouter>
             <div className="container">
-                <Header/>
+                <HeaderContainer/>
                 <Navbar/>
 
                 <div className="wrapper-navbar">

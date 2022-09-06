@@ -15,20 +15,19 @@ import Users from "./Users";
 import {Preloader} from "../common/preloader/Preloader";
 
 
-type UsersContainerType = MapStatePropsType & MapDispatchPropsType
-//     {
-//     users: UsersType[],
-//     pageSize: number,
-//     totalUsersCount: number,
-//     currentPage: number,
-//     follow: (userId: number) => void,
-//     unfollow: (userId: number) => void,
-//     isFetching: boolean,
-//     toggleIsFetching: (isFetching: boolean) => void
-//     setUsers: (users: UsersType[]) => void,
-//     setCurrentPage: (currentPage: number) => void,
-//     setUsersTotalCount: (totalCount: number) => void
-// }
+type UsersContainerType = {
+    users: UsersType[],
+    pageSize: number,
+    totalUsersCount: number,
+    currentPage: number,
+    follow: (userId: number) => void,
+    unfollow: (userId: number) => void,
+    isFetching: boolean,
+    toggleIsFetching: (isFetching: boolean) => void
+    setUsers: (users: UsersType[]) => void,
+    setCurrentPage: (currentPage: number) => void,
+    setUsersTotalCount: (totalCount: number) => void
+}
 export const instance = axios.create({
     withCredentials: true,
     baseURL: 'https://social-network.samuraijs.com/api/1.0/',

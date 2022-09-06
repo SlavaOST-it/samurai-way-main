@@ -4,14 +4,25 @@
     background-color: #343434;
     margin-bottom: 15px;
     padding: 20px 0 20px 0;
-
+    display: flex;
+    justify-content: space-between;
 }
 
 .header_logo {
+    margin-left: 50px;
+}
+
+.loginBlock {
+    margin-right: 50px;
+    color: white;
 
 }
 
-.header_name{
-    color: white;
+.circle{
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: white;
+    border: 1px solid white;
 
 }
