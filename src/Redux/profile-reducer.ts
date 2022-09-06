@@ -17,13 +17,54 @@ export type PostsDataType = {
     message: string,
     likesCount: number
 }
+export type ContactsType = {
+    github: string
+    vk: string
+    facebook: string
+    instagram: string
+    twitter: string
+    website: string
+    youtube: string
+    mainLink: string
+}
+export type PhotoType = {
+    small: (string)
+    // URL address of user photo (small size) (null if photo is not uploaded to the server)
+    large: (string)
+    // URL address of user photo (large size) (null if photo is not uploaded to the server)
+}
+export type UserProfileType = {
+    "userId": number| null,
+    "aboutMe": string| null
+    "lookingForAJob": boolean | null,
+    "lookingForAJobDescription": string | null,
+    "fullName": string | null,
+    "contacts": {
+        "github": string | null,
+        "vk": string | null,
+        "facebook":string | null,
+        "instagram": string | null,
+        "twitter": string | null,
+        "website": string | null,
+        "youtube": string | null,
+        "mainLink": string | null,
+    },
+    "photos": {
+        "small": string | null,
+        // URL address of user photo (small size) (null if photo is not uploaded to the server)
+        "large": string | null
+        // URL address of user photo (large size) (null if photo is not uploaded to the server)
+    }
+}
+
 export type ProfilePageType = {
+    profile: UserProfileType[] | null
     posts: PostsDataType[]
     newPostText: string
-    profile: null
 }
 
 let initialState: ProfilePageType = {
+    profile: null,
     posts: [
         {id: 1, message: 'Do you like me', likesCount: 1},
         {id: 2, message: 'What it is?', likesCount: 5},
@@ -32,7 +73,7 @@ let initialState: ProfilePageType = {
         {id: 5, message: 'Oooo ha ha ha lol', likesCount: 10}
     ],
     newPostText: '',
-    profile: null
+
 };
 
 
@@ -99,7 +140,7 @@ export const changeNewMessageTextAC = (newMessage: string) => {
 }
 
 
-export const setUserProfileAC = (profile: any) => {
+export const setUserProfileAC = (profile: UserProfileType[]) => {
     return {
         type: "SET-USER-PROFILE",
         profile
