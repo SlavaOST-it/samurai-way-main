@@ -4,13 +4,19 @@ import '../../App.css';
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
 
+export type ProfileType = {
+    profile: any
+}
 
+export const Profile: React.FC<ProfileType> = (
+    {
+        profile
+    })=> {
 
-const Profile = () => {
     return (
         <main>
             <div className={s.profile_info}>
-                <ProfileInfo/>
+                <ProfileInfo profile={profile}/>
             </div>
             <div className={s.my_posts}>
                 <MyPostsContainer
@@ -21,5 +27,3 @@ const Profile = () => {
         </main>
     );
 }
-
-export default Profile;

@@ -3,7 +3,6 @@ import './App.css';
 import {BrowserRouter, Route} from "react-router-dom";
 import Header from "./components/Header/Header";
 import Navbar from "./components/Navbar/Navbar";
-import Profile from "./components/Profile/Profile";
 import Footer from "./components/Footer/Footer";
 import News from "./components/News/News";
 import Music from "./components/Music/Music";
@@ -11,6 +10,7 @@ import Settings from "./components/Settings/Settings";
 import SideBar from "./components/Navbar/SideBar";
 import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
+import ProfileContainer from "./components/Profile/ProfileContainer";
 
 
 const App = () => {
@@ -21,9 +21,8 @@ const App = () => {
                 <Navbar/>
 
                 <div className="wrapper-navbar">
-
                     <Route path='/profile'
-                           render={() => <Profile/>}/>
+                           render={() => <ProfileContainer/>}/>
 
                     <Route path='/dialogs'
                            render={() => <DialogsContainer/>}/>
@@ -36,7 +35,7 @@ const App = () => {
 
                     <Route path='/settings' render={() => <Settings/>}/>
                     <Route path='sidebar'
-                           render={() =><SideBar/>}/>
+                           render={() => <SideBar/>}/>
 
                 </div>
                 <Footer/>
