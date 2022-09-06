@@ -5,7 +5,6 @@ import {sidebarReducer} from "./sidebar-reducer";
 import {usersReducer} from "./users-reducer";
 
 
-
 export const rootReducer = combineReducers({
     profilePage: profileReducer,
     messagesPage: dialogsReducer,
@@ -13,6 +12,7 @@ export const rootReducer = combineReducers({
     sidebar: sidebarReducer
 })
 
+export let store = createStore(rootReducer)
 export type AppStateType = ReturnType<typeof rootReducer>
-
-export let store: any = createStore(rootReducer)                     // fixed ANY  !!!!!!!!
+//@ts-ignore
+window.store = store

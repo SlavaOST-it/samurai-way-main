@@ -2,16 +2,17 @@ import React from 'react';
 import s from "./Users.module.css";
 import userPhoto from "../img/logo/user-logo.png";
 import {UsersType} from "../../Redux/users-reducer";
+import {NavLink} from "react-router-dom";
 
 
-type UsersPropsType={
+type UsersPropsType = {
     users: UsersType[],
     follow: (userId: number) => void,
     unfollow: (userId: number) => void,
     totalUsersCount: number,
     pageSize: number,
     currentPage: number,
-    onPageChanges: (pageNumber: number) =>void
+    onPageChanges: (pageNumber: number) => void
 }
 
 export const Users = (props: UsersPropsType) => {
@@ -27,7 +28,7 @@ export const Users = (props: UsersPropsType) => {
                 {pages.map(p => {
                     return <span key={p} className={props.currentPage === p ? s.pageSelected : ""}
                                  onClick={() => {
-                                    props.onPageChanges(p)
+                                     props.onPageChanges(p)
                                  }}>{p}</span>
                 })}
             </div>
@@ -36,8 +37,10 @@ export const Users = (props: UsersPropsType) => {
 
                 <div className={s.block01}>
                     <div className={s.logoAndName}>
-                        <img className={s.user_logo} src={u.photos.small != null ? u.photos.small : userPhoto}
-                             alt={"logo user"}/>
+                        <NavLink to={'/profile/' + u.id}>
+                            <img className={s.user_logo} src={u.photos.small != null ? u.photos.small : userPhoto}
+                                 alt={"logo user"}/>
+                        </NavLink>
                         <div className={s.nameUser}>{u.name}</div>
                     </div>
                     <div>
