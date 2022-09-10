@@ -44,6 +44,27 @@
     text-align: center;
     text-decoration: none;
 }
+
+.btnDisable{
+    background-color: #656565;
+    border: 1px solid #222222;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: #b0b0b0;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Circular,-apple-system,BlinkMacSystemFont,Roboto,"Helvetica Neue",sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    margin-left: 10px;
+    margin-top: 7px;
+    outline: none;
+    padding: 5px 5px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+}
 .block02 {
     display: flex;
     justify-content: space-between;

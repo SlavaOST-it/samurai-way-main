@@ -12,7 +12,8 @@ export type UsersPageType = {
     pageSize: number,
     totalUsersCount: number,
     currentPage: number,
-    isFetching: boolean
+    isFetching: boolean,
+    followingDisable: number[]
 }
 
 let initialState: UsersPageType = {
@@ -20,7 +21,8 @@ let initialState: UsersPageType = {
     pageSize: 5,
     totalUsersCount: 0,
     currentPage: 1,
-    isFetching: false
+    isFetching: false,
+    followingDisable: []
 };
 
 export type FollowAT = ReturnType<typeof followAC>
@@ -28,8 +30,16 @@ export type UnfollowAT = ReturnType<typeof unfollowAC>
 export type SetUsersAT = ReturnType<typeof setUsersAC>
 export type SetCurrentPageAT = ReturnType<typeof setCurrentPageAC>
 export type SetUsersTotalCountAT = ReturnType<typeof setUsersTotalCountAC>
-export type ToggleIsFetchingAT =ReturnType<typeof toggleIsFetchingAC>
-export type ActionsTypes = FollowAT | UnfollowAT | SetUsersAT | SetCurrentPageAT | SetUsersTotalCountAT | ToggleIsFetchingAT
+export type ToggleIsFetchingAT = ReturnType<typeof toggleIsFetchingAC>
+export type toggleFollowingDisableAT = ReturnType<typeof toggleFollowingDisableAC>
+export type ActionsTypes =
+    FollowAT
+    | UnfollowAT
+    | SetUsersAT
+    | SetCurrentPageAT
+    | SetUsersTotalCountAT
+    | ToggleIsFetchingAT
+    | toggleFollowingDisableAT
 
 export const usersReducer = (state: UsersPageType = initialState, action: ActionsTypes): UsersPageType => {
     switch (action.type) {
@@ -79,6 +89,13 @@ export const usersReducer = (state: UsersPageType = initialState, action: Action
                 isFetching: action.isFetching
             }
 
+        case "TOGGLE-IS-FOLLOWING-PROGRESS":
+            return {
+                ...state,
+                followingDisable: action.isFetching
+                    ? [...state.followingDisable, action.userId]
+                    : state.followingDisable.filter(id => id != action.userId)
+            }
         default:
             return state
     }
@@ -101,4 +118,7 @@ export const setUsersTotalCountAC = (totalUsersCount: number) => {
 }
 export const toggleIsFetchingAC = (isFetching: boolean) => {
     return {type: "TOGGLE-IS-FETCHING", isFetching} as const
+}
+export const toggleFollowingDisableAC = (isFetching: boolean, userId: number) => {
+    return {type: "TOGGLE-IS-FOLLOWING-PROGRESS", isFetching, userId} as const
 }

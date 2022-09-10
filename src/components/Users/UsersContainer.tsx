@@ -5,7 +5,7 @@ import {
     followAC,
     setCurrentPageAC,
     setUsersAC,
-    setUsersTotalCountAC, toggleIsFetchingAC,
+    setUsersTotalCountAC, toggleFollowingDisableAC, toggleIsFetchingAC,
     unfollowAC,
     UsersType,
 } from "../../Redux/users-reducer";
@@ -23,10 +23,12 @@ type UsersContainerType = {
     follow: (userId: number) => void,
     unfollow: (userId: number) => void,
     isFetching: boolean,
+    followingDisable: number [],
     toggleIsFetching: (isFetching: boolean) => void
     setUsers: (users: UsersType[]) => void,
     setCurrentPage: (currentPage: number) => void,
-    setUsersTotalCount: (totalCount: number) => void
+    setUsersTotalCount: (totalCount: number) => void,
+    toggleFollowingDisable: (isFetching: boolean, userId: number) =>void
 }
 
 class UsersContainer extends React.Component<UsersContainerType, UsersContainerType> {
@@ -64,6 +66,10 @@ class UsersContainer extends React.Component<UsersContainerType, UsersContainerT
                 pageSize={this.props.pageSize}
                 currentPage={this.props.currentPage}
                 onPageChanges={this.onPageChanges}
+                isFetching={this.props.isFetching}
+                followingDisable={this.props.followingDisable}
+                toggleFollowingDisable={this.props.toggleFollowingDisable}
+
             />
         </>
     }
@@ -75,7 +81,8 @@ type MapStatePropsType = {
     pageSize: number,
     totalUsersCount: number,
     currentPage: number,
-    isFetching: boolean
+    isFetching: boolean,
+    followingDisable: number []
 }
 type MapDispatchPropsType = {
     follow: (userId: number) => void,
@@ -83,7 +90,8 @@ type MapDispatchPropsType = {
     setUsers: (users: UsersType[]) => void,
     setCurrentPage: (currentPage: number) => void,
     setUsersTotalCount: (totalCount: number) => void,
-    toggleIsFetching: (isFetching: boolean) => void
+    toggleIsFetching: (isFetching: boolean) => void,
+    toggleFollowingDisable: (isFetching: boolean, userId: number) =>void
 }
 
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
@@ -92,7 +100,8 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
         pageSize: state.usersPage.pageSize,
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching
+        isFetching: state.usersPage.isFetching,
+        followingDisable: state.usersPage.followingDisable
     }
 }
 let mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
@@ -114,6 +123,9 @@ let mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
         },
         toggleIsFetching: (isFetching: boolean) => {
             dispatch(toggleIsFetchingAC(isFetching))
+        },
+        toggleFollowingDisable: (isFetching: boolean, userId: number) =>{
+            dispatch(toggleFollowingDisableAC(isFetching, userId))
         }
     }
 }

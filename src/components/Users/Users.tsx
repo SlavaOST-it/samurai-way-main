@@ -13,7 +13,10 @@ type UsersPropsType = {
     totalUsersCount: number,
     pageSize: number,
     currentPage: number,
-    onPageChanges: (pageNumber: number) => void
+    onPageChanges: (pageNumber: number) => void,
+    isFetching: boolean,
+    followingDisable: number [],
+    toggleFollowingDisable: (isFetching: boolean, userId: number) =>void
 }
 
 
@@ -24,6 +27,7 @@ export const Users = (props: UsersPropsType) => {
         pages.push(i)
     }
 
+    // const finalClassButton =  ? s.btnDisable : s.btn
     return (
         <div className={s.body}>
             <div className={s.pagesList}>
@@ -49,23 +53,29 @@ export const Users = (props: UsersPropsType) => {
                         {u.followed
 
                             ? <button
-                                className={s.btn}
+                                className={props.followingDisable.some(id=> id == u.id) ? s.btnDisable : s.btn}
+                                disabled={props.followingDisable.some(id=> id == u.id)}
                                 onClick={() => {
+                                    props.toggleFollowingDisable(true, u.id)
                                     followAPI.unfollow(u.id)
                                         .then((data) => {
                                             if (data.resultCode == 0) {
                                                 props.unfollow(u.id)
                                             }
+                                            props.toggleFollowingDisable(false, u.id)
                                         })
                                 }}> UNFOLLOW
                             </button>
-                            :  <button className={s.btn}
+                            :  <button className={props.followingDisable.some(id=> id == u.id) ? s.btnDisable : s.btn}
+                                       disabled={props.followingDisable.some(id=> id == u.id)}
                                        onClick={() => {
+                                           props.toggleFollowingDisable(true, u.id)
                                            followAPI.follow(u.id)
                                                .then((data) => {
                                                    if (data.resultCode == 0) {
                                                        props.follow(u.id)
                                                    }
+                                                   props.toggleFollowingDisable(false, u.id)
                                                })
                                        }}>
                                 FOLLOW
