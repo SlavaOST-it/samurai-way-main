@@ -8,7 +8,7 @@ export type UsersType = {
 
 }
 export type UsersPageType = {
-    "items": UsersType[],
+    items: UsersType[],
     pageSize: number,
     totalUsersCount: number,
     currentPage: number,
@@ -16,7 +16,7 @@ export type UsersPageType = {
 }
 
 let initialState: UsersPageType = {
-    "items": [],
+    items: [],
     pageSize: 5,
     totalUsersCount: 0,
     currentPage: 1,
@@ -38,7 +38,7 @@ export const usersReducer = (state: UsersPageType = initialState, action: Action
                 ...state,
                 items: [...state.items.map(u => {
                     if (u.id === action.userId) {
-                        return {...u, followed: false}
+                        return {...u, followed: true}
                     }
                     return u
                 })]
@@ -49,7 +49,7 @@ export const usersReducer = (state: UsersPageType = initialState, action: Action
                 ...state,
                 items: [...state.items.map(u => {
                     if (u.id === action.userId) {
-                        return {...u, followed: true}
+                        return {...u, followed: false}
                     }
                     return u
                 })]
