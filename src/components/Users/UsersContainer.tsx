@@ -10,9 +10,9 @@ import {
     UsersType,
 } from "../../Redux/users-reducer";
 import {AppStateType} from "../../Redux/redux-store";
-import axios from "axios";
 import Users from "./Users";
 import {Preloader} from "../common/preloader/Preloader";
+import {usersAPI} from "../../api/api";
 
 
 type UsersContainerType = {
@@ -28,35 +28,26 @@ type UsersContainerType = {
     setCurrentPage: (currentPage: number) => void,
     setUsersTotalCount: (totalCount: number) => void
 }
-export const instance = axios.create({
-    withCredentials: true,
-    baseURL: 'https://social-network.samuraijs.com/api/1.0/',
-    headers: {
-        "API-KEY": "dd070108-da2d-47ec-bd5a-e22f291be6bf"
-    }
-});
 
 class UsersContainer extends React.Component<UsersContainerType, UsersContainerType> {
 
     componentDidMount() {
         this.props.toggleIsFetching(true)
-        if (this.props.users.length === 0) {
-            instance.get(`https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`)
-                .then((response) => {
-                    this.props.toggleIsFetching(false)
-                    this.props.setUsers(response.data.items);
-                    this.props.setUsersTotalCount(response.data.totalCount)
-                })
-        }
+        usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
+            .then((data) => {
+                this.props.toggleIsFetching(false)
+                this.props.setUsers(data.items);
+                this.props.setUsersTotalCount(data.totalCount)
+            })
     }
 
     onPageChanges = (pageNumber: number) => {
         this.props.toggleIsFetching(true)
         this.props.setCurrentPage(pageNumber)
-        instance.get(`https://social-network.samuraijs.com/api/1.0/users?page=${pageNumber}&count=${this.props.pageSize}`)
-            .then((response) => {
+        usersAPI.getUsers(pageNumber, this.props.pageSize)
+            .then((data) => {
                 this.props.toggleIsFetching(false)
-                this.props.setUsers(response.data.items)
+                this.props.setUsers(data.items)
             })
     }
 
@@ -64,7 +55,7 @@ class UsersContainer extends React.Component<UsersContainerType, UsersContainerT
         return <>
             {this.props.isFetching
                 ? <Preloader/>
-                : null }
+                : null}
             <Users
                 users={this.props.users}
                 follow={this.props.follow}
