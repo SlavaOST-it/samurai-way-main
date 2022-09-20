@@ -2,8 +2,9 @@
 
     grid-area: h;
     background-color: #343434;
+    height: 55px;
     margin-bottom: 15px;
-    padding: 20px 0 20px 0;
+    padding: 5px 0 5px 0;
     display: flex;
     justify-content: space-between;
 }
@@ -18,11 +19,8 @@
 
 }
 
-.circle{
-    width: 25px;
-    height: 25px;
+.userPhoto{
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
-    background-color: white;
-    border: 1px solid white;
-
 }
