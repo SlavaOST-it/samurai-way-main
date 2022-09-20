@@ -14,11 +14,8 @@ export const usersAPI = {
             .then(response => {
                 return response.data
             })
-    }
-}
+    },
 
-
-export const followAPI = {
     follow(userId: number) {
         return instance.post(`follow/${userId}`)
             .then(response => {

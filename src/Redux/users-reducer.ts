@@ -1,7 +1,6 @@
 import {Dispatch} from "redux";
 import {usersAPI} from "../api/api";
-import {ThunkAction} from "redux-thunk";
-import {AppStateType} from "./redux-store";
+
 
 export type UsersType = {
     "name": string,
@@ -129,14 +128,41 @@ export const toggleFollowingDisableAC = (isFetching: boolean, userId: number) =>
 }
 
 
-export const getUsersThunkCreator = (currentPage: number, pageSize: number)  => {
-    return async (dispatch: Dispatch<ActionsTypes>) => {
+
+
+export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
+    return (dispatch: Dispatch<ActionsTypes>) => {
         dispatch(toggleIsFetchingAC(true))
         usersAPI.getUsers(currentPage, pageSize)
             .then((data) => {
                 dispatch(toggleIsFetchingAC(false))
                 dispatch(setUsersAC(data.items));
                 dispatch(setUsersTotalCountAC(data.totalCount))
+            })
+    }
+}
+
+export const followThunkCreation = (userId: number) => {
+    return (dispatch: Dispatch<ActionsTypes>) => {
+        dispatch(toggleFollowingDisableAC(true, userId))
+        usersAPI.follow(userId)
+            .then((data) => {
+                if (data.resultCode == 0) {
+                    dispatch(followAC(userId))
+                }
+                dispatch(toggleFollowingDisableAC(false, userId))
+            })
+    }
+}
+export const unfollowThunkCreation = (userId: number) => {
+    return (dispatch: Dispatch<ActionsTypes>) => {
+        dispatch(toggleFollowingDisableAC(true, userId));
+        usersAPI.unfollow(userId)
+            .then((data) => {
+                if (data.resultCode == 0) {
+                    dispatch(unfollowAC(userId))
+                }
+               dispatch(toggleFollowingDisableAC(false, userId))
             })
     }
 }

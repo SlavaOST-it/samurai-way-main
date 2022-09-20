@@ -2,17 +2,17 @@ import React from 'react';
 import {connect} from "react-redux";
 import {Dispatch} from "redux";
 import {
-    followAC,
+    followThunkCreation,
+    getUsersThunkCreator,
     setCurrentPageAC,
     setUsersAC,
-    setUsersTotalCountAC, toggleFollowingDisableAC, toggleIsFetchingAC,
-    unfollowAC,
+    setUsersTotalCountAC, toggleIsFetchingAC, unfollowThunkCreation,
     UsersType,
 } from "../../Redux/users-reducer";
 import {AppStateType} from "../../Redux/redux-store";
 import Users from "./Users";
 import {Preloader} from "../common/preloader/Preloader";
-import {usersAPI} from "../../api/api";
+
 
 
 type UsersContainerType = {
@@ -28,29 +28,17 @@ type UsersContainerType = {
     setUsers: (users: UsersType[]) => void,
     setCurrentPage: (currentPage: number) => void,
     setUsersTotalCount: (totalCount: number) => void,
-    toggleFollowingDisable: (isFetching: boolean, userId: number) =>void
+    getUsers: (currentPage: number, pageSize: number) => void
 }
 
-class UsersContainer extends React.Component<UsersContainerType, UsersContainerType> {
+class UsersContainer extends React.Component<any, UsersContainerType> {                // ANY !!!!!!!!!!!!!
 
     componentDidMount() {
-        this.props.toggleIsFetching(true)
-        usersAPI.getUsers(this.props.currentPage, this.props.pageSize)
-            .then((data) => {
-                this.props.toggleIsFetching(false)
-                this.props.setUsers(data.items);
-                this.props.setUsersTotalCount(data.totalCount)
-            })
+        this.props.getUsers(this.props.currentPage, this.props.pageSize)
     }
 
     onPageChanges = (pageNumber: number) => {
-        this.props.toggleIsFetching(true)
-        this.props.setCurrentPage(pageNumber)
-        usersAPI.getUsers(pageNumber, this.props.pageSize)
-            .then((data) => {
-                this.props.toggleIsFetching(false)
-                this.props.setUsers(data.items)
-            })
+        this.props.getUsers(pageNumber, this.props.pageSize)
     }
 
     render() {
@@ -66,10 +54,7 @@ class UsersContainer extends React.Component<UsersContainerType, UsersContainerT
                 pageSize={this.props.pageSize}
                 currentPage={this.props.currentPage}
                 onPageChanges={this.onPageChanges}
-                isFetching={this.props.isFetching}
                 followingDisable={this.props.followingDisable}
-                toggleFollowingDisable={this.props.toggleFollowingDisable}
-
             />
         </>
     }
@@ -85,14 +70,11 @@ type MapStatePropsType = {
     followingDisable: number []
 }
 type MapDispatchPropsType = {
-    follow: (userId: number) => void,
-    unfollow: (userId: number) => void,
     setUsers: (users: UsersType[]) => void,
     setCurrentPage: (currentPage: number) => void,
     setUsersTotalCount: (totalCount: number) => void,
     toggleIsFetching: (isFetching: boolean) => void,
-    toggleFollowingDisable: (isFetching: boolean, userId: number) =>void
-}
+   }
 
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
@@ -101,17 +83,12 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
-        followingDisable: state.usersPage.followingDisable
+        followingDisable: state.usersPage.followingDisable,
+
     }
 }
 let mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
     return {
-        follow: (userId: number) => {
-            dispatch(followAC(userId));
-        },
-        unfollow: (userId: number) => {
-            dispatch(unfollowAC(userId))
-        },
         setUsers: (users: any[]) => {
             dispatch(setUsersAC(users))
         },
@@ -123,12 +100,14 @@ let mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
         },
         toggleIsFetching: (isFetching: boolean) => {
             dispatch(toggleIsFetchingAC(isFetching))
-        },
-        toggleFollowingDisable: (isFetching: boolean, userId: number) =>{
-            dispatch(toggleFollowingDisableAC(isFetching, userId))
         }
     }
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersContainer);
+export default connect(mapStateToProps, {
+    mapDispatchToProps,
+    follow: followThunkCreation,
+    unfollow: unfollowThunkCreation,
+    getUsers: getUsersThunkCreator
+})(UsersContainer);

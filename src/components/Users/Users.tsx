@@ -3,7 +3,6 @@ import s from "./Users.module.css";
 import userPhoto from "../img/logo/user-logo.png";
 import {UsersType} from "../../Redux/users-reducer";
 import {NavLink} from "react-router-dom";
-import {followAPI} from "../../api/api";
 
 
 type UsersPropsType = {
@@ -14,9 +13,7 @@ type UsersPropsType = {
     pageSize: number,
     currentPage: number,
     onPageChanges: (pageNumber: number) => void,
-    isFetching: boolean,
-    followingDisable: number [],
-    toggleFollowingDisable: (isFetching: boolean, userId: number) =>void
+    followingDisable: number []
 }
 
 
@@ -56,27 +53,13 @@ export const Users = (props: UsersPropsType) => {
                                 className={props.followingDisable.some(id=> id == u.id) ? s.btnDisable : s.btn}
                                 disabled={props.followingDisable.some(id=> id == u.id)}
                                 onClick={() => {
-                                    props.toggleFollowingDisable(true, u.id)
-                                    followAPI.unfollow(u.id)
-                                        .then((data) => {
-                                            if (data.resultCode == 0) {
-                                                props.unfollow(u.id)
-                                            }
-                                            props.toggleFollowingDisable(false, u.id)
-                                        })
+                                   props.unfollow(u.id)
                                 }}> UNFOLLOW
                             </button>
                             :  <button className={props.followingDisable.some(id=> id == u.id) ? s.btnDisable : s.btn}
                                        disabled={props.followingDisable.some(id=> id == u.id)}
                                        onClick={() => {
-                                           props.toggleFollowingDisable(true, u.id)
-                                           followAPI.follow(u.id)
-                                               .then((data) => {
-                                                   if (data.resultCode == 0) {
-                                                       props.follow(u.id)
-                                                   }
-                                                   props.toggleFollowingDisable(false, u.id)
-                                               })
+                                           props.follow(u.id)
                                        }}>
                                 FOLLOW
                             </button>
