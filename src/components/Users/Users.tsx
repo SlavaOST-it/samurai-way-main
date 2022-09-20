@@ -24,7 +24,7 @@ export const Users = (props: UsersPropsType) => {
         pages.push(i)
     }
 
-    // const finalClassButton =  ? s.btnDisable : s.btn
+
     return (
         <div className={s.body}>
             <div className={s.pagesList}>
