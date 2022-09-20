@@ -3,21 +3,15 @@ import Header from "./Header";
 import {connect} from "react-redux";
 import {AppStateType} from "../../Redux/redux-store";
 import {Dispatch} from "redux";
-import {setAuthUserDataAC} from "../../Redux/auth-reducer";
-import {authAPI} from "../../api/api";
+import {getAuthThunkCreator, setAuthUserDataAC} from "../../Redux/auth-reducer";
+import {UserProfileType} from "../../Redux/profile-reducer";
 
-export type HeaderContainerType = MapStatePropsType & MapDispatchPropsType
 
-class HeaderContainer extends React.Component<HeaderContainerType> {
+export type HeaderContainerType = MapStatePropsType & MapDispatchPropsType & {getAuth: ()=>void}
+
+class HeaderContainer extends React.Component<any, HeaderContainerType> {
     componentDidMount() {
-        authAPI.getAuth()
-            .then((data) => {
-                if (data.resultCode === 0) {
-                    let {id, email, login} = data.data
-                    this.props.setAuthUserData(id, email, login)
-                }
-            })
-
+        this.props.getAuth()
     }
 
 
@@ -26,6 +20,7 @@ class HeaderContainer extends React.Component<HeaderContainerType> {
             <Header {...this.props}
                     isAuth={this.props.isAuth}
                     login={this.props.login}
+                    userPhoto={this.props.userPhoto}
             />
         );
     }
@@ -34,7 +29,8 @@ class HeaderContainer extends React.Component<HeaderContainerType> {
 
 type MapStatePropsType = {
     isAuth: boolean,
-    login: string | null
+    login: string | null,
+    userPhoto: UserProfileType[] | null
 }
 type MapDispatchPropsType = {
     setAuthUserData: (userId: number | null, email: number | null, login: number | null) => void
@@ -43,7 +39,8 @@ type MapDispatchPropsType = {
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         isAuth: state.auth.isAuth,
-        login: state.auth.login
+        login: state.auth.login,
+        userPhoto: state.profilePage.profile
     }
 }
 let mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
@@ -53,4 +50,4 @@ let mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
         }
     }
 }
-export default connect(mapStateToProps, mapDispatchToProps)(HeaderContainer)
+export default connect(mapStateToProps, {mapDispatchToProps, getAuth: getAuthThunkCreator})(HeaderContainer)
