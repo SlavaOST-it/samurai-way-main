@@ -7,7 +7,7 @@ import {getAuthThunkCreator, setAuthUserDataAC} from "../../Redux/auth-reducer";
 import {UserProfileType} from "../../Redux/profile-reducer";
 
 
-export type HeaderContainerType = MapStatePropsType & MapDispatchPropsType & {getAuth: ()=>void}
+export type HeaderContainerType = MapStatePropsType & {getAuth: ()=>void}
 
 class HeaderContainer extends React.Component<any, HeaderContainerType> {
     componentDidMount() {
@@ -32,9 +32,9 @@ type MapStatePropsType = {
     login: string | null,
     userPhoto: UserProfileType[] | null
 }
-type MapDispatchPropsType = {
-    setAuthUserData: (userId: number | null, email: number | null, login: number | null) => void
-}
+// type MapDispatchPropsType = {
+//     setAuthUserData: (userId: number | null, email: number | null, login: number | null) => void
+// }
 
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
@@ -43,11 +43,11 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
         userPhoto: state.profilePage.profile
     }
 }
-let mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
-    return {
-        setAuthUserData: (userId: number | null, email: number | null, login: number | null) => {
-            dispatch(setAuthUserDataAC(userId, email, login))
-        }
-    }
-}
-export default connect(mapStateToProps, {mapDispatchToProps, getAuth: getAuthThunkCreator})(HeaderContainer)
+// let mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
+//     return {
+//         setAuthUserData: (userId: number | null, email: number | null, login: number | null) => {
+//             dispatch(setAuthUserDataAC(userId, email, login))
+//         }
+//     }
+// }
+export default connect(mapStateToProps, {getAuth: getAuthThunkCreator})(HeaderContainer)

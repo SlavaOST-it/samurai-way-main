@@ -37,25 +37,25 @@ export type PhotoType = {
     // URL address of user photo (large size) (null if photo is not uploaded to the server)
 }
 export type UserProfileType = {
-    "userId": number| null,
-    "aboutMe": string| null
-    "lookingForAJob": boolean | null,
-    "lookingForAJobDescription": string | null,
-    "fullName": string | null,
-    "contacts": {
-        "github": string | null,
-        "vk": string | null,
-        "facebook":string | null,
-        "instagram": string | null,
-        "twitter": string | null,
-        "website": string | null,
-        "youtube": string | null,
-        "mainLink": string | null,
+    userId: number| null,
+    aboutMe: string| null
+    lookingForAJob: boolean | null,
+    lookingForAJobDescription: string | null,
+    fullName: string | null,
+    contacts: {
+        github: string | null,
+        vk: string | null,
+        facebook:string | null,
+        instagram: string | null,
+        twitter: string | null,
+        website: string | null,
+        youtube: string | null,
+        mainLink: string | null,
     },
-    "photos": {
-        "small": string | null,
+    photos: {
+        small: string | null,
         // URL address of user photo (small size) (null if photo is not uploaded to the server)
-        "large": string | null
+        large: string | null
         // URL address of user photo (large size) (null if photo is not uploaded to the server)
     }
 }

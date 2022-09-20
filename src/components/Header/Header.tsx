@@ -2,6 +2,7 @@ import React from 'react';
 import logo from '../img/logo/logo.png';
 import s from './Header.module.css';
 import {NavLink} from "react-router-dom";
+import photo from "../img/logo/user-logo.png"
 
 
 export type HeaderType = {
@@ -12,9 +13,9 @@ export type HeaderType = {
 
 const Header = (props: HeaderType) => {
 
-    const userPhoto = props.userPhoto.photos.large
-        ? props.userPhoto.photos.large
-        : "https://pbs.twimg.com/profile_images/977700491051323394/OiI5vDqo.jpg"
+    // const userPhoto = props.userPhoto.photos.large
+    //     ? props.userPhoto.photos.large
+    //     : photo
 
     return (
         <header className={s.header}>
@@ -24,7 +25,7 @@ const Header = (props: HeaderType) => {
             <div className={s.loginBlock}>
                 {props.isAuth
                     ? <div>
-                        <img className={s.userPhoto} src={userPhoto} alt={"ss"}/>
+                        <img className={s.userPhoto} src={""} alt={"ss"}/>
                     </div>
                     : <NavLink to={'/login'}>Login</NavLink>}
 

@@ -14,6 +14,7 @@ type UsersPropsType = {
     currentPage: number,
     onPageChanges: (pageNumber: number) => void,
     followingDisable: number []
+
 }
 
 
@@ -23,7 +24,6 @@ export const Users = (props: UsersPropsType) => {
     for (let i = 1; i <= pagesCount; i++) {
         pages.push(i)
     }
-
 
     return (
         <div className={s.body}>

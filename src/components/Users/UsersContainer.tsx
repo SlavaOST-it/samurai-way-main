@@ -12,7 +12,7 @@ import {
 import {AppStateType} from "../../Redux/redux-store";
 import Users from "./Users";
 import {Preloader} from "../common/preloader/Preloader";
-
+import {Redirect} from "react-router-dom";
 
 
 type UsersContainerType = {
@@ -29,6 +29,7 @@ type UsersContainerType = {
     setCurrentPage: (currentPage: number) => void,
     setUsersTotalCount: (totalCount: number) => void,
     getUsers: (currentPage: number, pageSize: number) => void
+    isAuth: boolean
 }
 
 class UsersContainer extends React.Component<any, UsersContainerType> {                // ANY !!!!!!!!!!!!!
@@ -42,6 +43,9 @@ class UsersContainer extends React.Component<any, UsersContainerType> {         
     }
 
     render() {
+        //проверка на логинизацию
+        if (!this.props.isAuth) return <Redirect to={"/login"}/>
+
         return <>
             {this.props.isFetching
                 ? <Preloader/>
@@ -55,6 +59,7 @@ class UsersContainer extends React.Component<any, UsersContainerType> {         
                 currentPage={this.props.currentPage}
                 onPageChanges={this.onPageChanges}
                 followingDisable={this.props.followingDisable}
+
             />
         </>
     }
@@ -68,13 +73,14 @@ type MapStatePropsType = {
     currentPage: number,
     isFetching: boolean,
     followingDisable: number []
+    isAuth: boolean
 }
 type MapDispatchPropsType = {
     setUsers: (users: UsersType[]) => void,
     setCurrentPage: (currentPage: number) => void,
     setUsersTotalCount: (totalCount: number) => void,
     toggleIsFetching: (isFetching: boolean) => void,
-   }
+}
 
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
@@ -84,7 +90,7 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
         followingDisable: state.usersPage.followingDisable,
-
+        isAuth: state.auth.isAuth
     }
 }
 let mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {

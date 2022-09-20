@@ -3,15 +3,20 @@ import s from './Profile.module.css'
 import '../../App.css';
 import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import MyPostsContainer from "./MyPosts/MyPostsContainer";
+import {UserProfileType} from "../../Redux/profile-reducer";
 
 export type ProfileType = {
-    profile: any
+    profile: UserProfileType,
+
 }
 
 export const Profile: React.FC<ProfileType> = (
     {
-        profile
-    })=> {
+        profile,
+
+    }) => {
+
+
 
     return (
         <main>

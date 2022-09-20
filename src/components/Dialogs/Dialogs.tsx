@@ -4,11 +4,13 @@ import Message from "./Message/Message";
 import DialogItem from "./DialogItem/DialogItem";
 import logoSend from "../img/logo/icons-message-email-send.png";
 import {MessagesPageType} from "../../Redux/dialogs-reducer";
+import {Redirect} from "react-router-dom";
 
 
 
 type DialogsPropsType = {
     dialogsPage: MessagesPageType,
+    isAuth: boolean,
     addNewMessage: (newMessageText: string)=>void,
     onChangeNewMessageText: (e: ChangeEvent<HTMLTextAreaElement>) => void
   }
@@ -33,6 +35,9 @@ const Dialogs = (props: DialogsPropsType) => {
     const onChangeNewMessageText = (e: ChangeEvent<HTMLTextAreaElement>) => {
         props.onChangeNewMessageText(e)
     }
+
+    if (!props.isAuth) return <Redirect to={"/login"}/>
+
 
     return (
         <div className={s.dialogs}>
