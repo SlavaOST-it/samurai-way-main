@@ -17,7 +17,7 @@ const App = () => {
     return (
         <BrowserRouter>
             <div className="container">
-                <HeaderContainer/>
+                <HeaderContainer setAuthUserData={undefined}/>
                 <Navbar/>
 
                 <div className="wrapper-navbar">
