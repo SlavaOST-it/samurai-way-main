@@ -1,3 +1,6 @@
+import {Dispatch} from "redux";
+import {profileAPI} from "../api/api";
+
 export type ChangeNewTextPostAT = ReturnType<typeof changeNewTextPostAC>
 export type AddPostAT = ReturnType<typeof addPostAC>
 export type AddNewMessageAT = ReturnType<typeof addNewMessageAC>
@@ -138,11 +141,19 @@ export const changeNewMessageTextAC = (newMessage: string) => {
         newMessage
     } as const
 }
-
-
 export const setUserProfileAC = (profile: UserProfileType[]) => {
     return {
         type: "SET-USER-PROFILE",
         profile
     } as const
+}
+
+
+export const getProfileThunkCreator = (userId: number) =>{
+    return (dispatch: Dispatch<ActionsTypes>) =>{
+        profileAPI.getProfile(userId)
+            .then((data) => {
+                dispatch(setUserProfileAC(data));
+            })
+    }
 }
