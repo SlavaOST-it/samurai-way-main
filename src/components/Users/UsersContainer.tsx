@@ -12,7 +12,7 @@ import {
 import {AppStateType} from "../../Redux/redux-store";
 import Users from "./Users";
 import {Preloader} from "../common/preloader/Preloader";
-import {Redirect} from "react-router-dom";
+import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 
 
 type UsersContainerType = {
@@ -43,9 +43,6 @@ class UsersContainer extends React.Component<any, UsersContainerType> {         
     }
 
     render() {
-        //проверка на логинизацию
-        if (!this.props.isAuth) return <Redirect to={"/login"}/>
-
         return <>
             {this.props.isFetching
                 ? <Preloader/>
@@ -73,7 +70,6 @@ type MapStatePropsType = {
     currentPage: number,
     isFetching: boolean,
     followingDisable: number []
-    isAuth: boolean
 }
 type MapDispatchPropsType = {
     setUsers: (users: UsersType[]) => void,
@@ -89,8 +85,7 @@ let mapStateToProps = (state: AppStateType): MapStatePropsType => {
         totalUsersCount: state.usersPage.totalUsersCount,
         currentPage: state.usersPage.currentPage,
         isFetching: state.usersPage.isFetching,
-        followingDisable: state.usersPage.followingDisable,
-        isAuth: state.auth.isAuth
+        followingDisable: state.usersPage.followingDisable
     }
 }
 let mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
@@ -111,9 +106,9 @@ let mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
 }
 
 
-export default connect(mapStateToProps, {
+export default withAuthRedirect (connect(mapStateToProps, {
     mapDispatchToProps,
     follow: followThunkCreation,
     unfollow: unfollowThunkCreation,
     getUsers: getUsersThunkCreator
-})(UsersContainer);
+})(UsersContainer));
