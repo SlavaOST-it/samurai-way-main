@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from "react-redux";
-import {Dispatch} from "redux";
+import {compose, Dispatch} from "redux";
 import {
     followThunkCreation,
     getUsersThunkCreator,
@@ -105,10 +105,12 @@ let mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
     }
 }
 
-
-export default withAuthRedirect (connect(mapStateToProps, {
-    mapDispatchToProps,
-    follow: followThunkCreation,
-    unfollow: unfollowThunkCreation,
-    getUsers: getUsersThunkCreator
-})(UsersContainer));
+export default compose<React.ComponentType>(
+    connect(mapStateToProps, {
+        mapDispatchToProps,
+        follow: followThunkCreation,
+        unfollow: unfollowThunkCreation,
+        getUsers: getUsersThunkCreator
+    }),
+    withAuthRedirect
+)(UsersContainer)
