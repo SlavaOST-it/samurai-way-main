@@ -1,6 +1,7 @@
 import React from 'react';
 import s from "./ProfileInfo.module.css";
 import {Preloader} from "../../common/preloader/Preloader";
+import {ProfileStatus} from "./ProfileStatus";
 
 type ProfileInfoType = {
     profile: any
@@ -22,6 +23,7 @@ const userPhoto = props.profile.photos.large
                 <div className={s.user_info}>
                     <div className={s.name}>{props.profile.fullName}</div>
                     <div className={s.status}>{props.profile.aboutMe}</div>
+                    <ProfileStatus status={"Hello"}/>
                 </div>
         </div>
 
