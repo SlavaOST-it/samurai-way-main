@@ -12,17 +12,17 @@ export type FormDataType = {
 export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
     return (
             <form onSubmit={props.handleSubmit}>
-                <div className={s.input_login}>
-                    <Field placeholder={"Login"} name={"login"} component={"input"}/>
+                <div >
+                    <Field className={s.input_login} placeholder={"Login"} name={"login"} component={"input"}/>
                 </div>
-                <div className={s.input_password}>
-                    <Field placeholder={"Password"} name={"password"} component={"input"}/>
+                <div >
+                    <Field className={s.input_password} placeholder={"Password"} name={"password"} component={"input"}/>
                 </div>
-                <div className={s.checkbox}>
-                    <Field component={"input"} name={"rememberMe"} type={"checkbox"}/> remember me
+                <div >
+                    <Field className={s.checkbox} component={"input"} name={"rememberMe"} type={"checkbox"}/> remember me
                 </div>
-                <div className={s.btn_login}>
-                    <button>Login</button>
+                <div >
+                    <button className={s.btn_login}>Login</button>
                 </div>
             </form>
     );

@@ -1,0 +1,33 @@
+.input_login {
+    margin: 5px 0;
+    border-radius: 5px;
+}
+
+.input_password {
+    margin: 5px 0;
+    border-radius: 5px;
+}
+
+.checkbox {
+    margin: 5px 0;
+}
+
+.btn_login {
+    background-color: #FFFFFF;
+    border: 1px solid #222222;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: #222222;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, "Helvetica Neue", sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+    margin-left: 10px;
+    outline: none;
+    padding: 5px 5px;
+    position: relative;
+    text-align: center;
+    text-decoration: none;
+}
