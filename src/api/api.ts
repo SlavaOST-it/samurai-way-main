@@ -38,18 +38,21 @@ export const profileAPI = {
     },
     getStatus(userId: number) {
         return instance.get(`profile/status/` + userId)
-            .then((response =>{
+            .then(response => {
                 return response.data
-            }))
+            })
     },
-    updateStatus(status: string){
-        return instance.put(`profile/status/`, {status: status})
+    updateStatus(status: string) {
+        return instance.put(`profile/status`, {status})
+            .then(response => {
+                return response.data
+            })
     }
 }
 
 export const authAPI = {
-    getAuth(){
-        return  instance.get(`auth/me`, )
+    getAuth() {
+        return instance.get(`auth/me`,)
             .then(response => {
                 return response.data
             })

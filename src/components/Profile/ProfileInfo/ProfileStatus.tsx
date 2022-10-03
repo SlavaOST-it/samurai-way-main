@@ -11,7 +11,7 @@ export const ProfileStatus = (props: ProfileStatusType) => {
 
     const changeMode = () => {
         setEditMode(!editMode)
-        props.updateStatus(localStatus)
+        props.updateStatus(localStatus.trim())
 
     }
     const changeStatus = (e: ChangeEvent<HTMLInputElement>) => {
