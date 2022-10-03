@@ -6,7 +6,7 @@ import {UserProfileType} from "../../../Redux/profile-reducer";
 
 type ProfileInfoType = {
     profile: UserProfileType
-    status: any,
+    status: string,
     updateStatus: (status: string) => void
 }
 

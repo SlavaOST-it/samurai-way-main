@@ -16,7 +16,7 @@ import {compose} from "redux";
 
 type ProfileContainerType = {
     profile: UserProfileType[] | null,
-    status: any,
+    status: string,
     setUserProfile: (profile: UserProfileType[]) => void,
     getProfile: (userId: number) => void,
     getStatus: (userId: number) => void,

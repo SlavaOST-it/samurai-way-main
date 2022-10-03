@@ -1,7 +1,7 @@
 import React, {ChangeEvent, useState} from 'react';
 
 export type ProfileStatusType = {
-    status: any,
+    status: string,
     updateStatus: (status: string) => void
 }
 
@@ -12,7 +12,6 @@ export const ProfileStatus = (props: ProfileStatusType) => {
     const changeMode = () => {
         setEditMode(!editMode)
         props.updateStatus(localStatus.trim())
-
     }
     const changeStatus = (e: ChangeEvent<HTMLInputElement>) => {
         setLocalStatus(e.currentTarget.value)
