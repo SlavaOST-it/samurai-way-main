@@ -6,6 +6,8 @@ export type AddPostAT = ReturnType<typeof addPostAC>
 export type AddNewMessageAT = ReturnType<typeof addNewMessageAC>
 export type ChangeNewMessageTextAT = ReturnType<typeof changeNewMessageTextAC>
 export type SetUserProfileAT = ReturnType<typeof setUserProfileAC>
+export type SetUserStatusAT = ReturnType<typeof setUserStatusAC>
+
 
 export type ActionsTypes =
     ChangeNewTextPostAT
@@ -13,6 +15,8 @@ export type ActionsTypes =
     | AddNewMessageAT
     | ChangeNewMessageTextAT
     | SetUserProfileAT
+    | SetUserStatusAT
+
 
 
 export type PostsDataType = {
@@ -20,32 +24,17 @@ export type PostsDataType = {
     message: string,
     likesCount: number
 }
-export type ContactsType = {
-    github: string
-    vk: string
-    facebook: string
-    instagram: string
-    twitter: string
-    website: string
-    youtube: string
-    mainLink: string
-}
-export type PhotoType = {
-    small: (string)
-    // URL address of user photo (small size) (null if photo is not uploaded to the server)
-    large: (string)
-    // URL address of user photo (large size) (null if photo is not uploaded to the server)
-}
+
 export type UserProfileType = {
-    userId: number| null,
-    aboutMe: string| null
+    userId: number | null,
+    aboutMe: string | null
     lookingForAJob: boolean | null,
     lookingForAJobDescription: string | null,
     fullName: string | null,
     contacts: {
         github: string | null,
         vk: string | null,
-        facebook:string | null,
+        facebook: string | null,
         instagram: string | null,
         twitter: string | null,
         website: string | null,
@@ -61,13 +50,15 @@ export type UserProfileType = {
 }
 
 export type ProfilePageType = {
-    profile: UserProfileType[] | null
+    profile: UserProfileType[] | null,
+    status: string,
     posts: PostsDataType[]
     newPostText: string
 }
 
 let initialState: ProfilePageType = {
     profile: null,
+    status: "",
     posts: [
         {id: 1, message: 'Do you like me', likesCount: 1},
         {id: 2, message: 'What it is?', likesCount: 5},
@@ -88,7 +79,6 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
                 newPostText: action.newText
             }
         }
-
         case "ADD-POST": {
             const newPost: PostsDataType = {
                 id: new Date().getTime(),
@@ -103,20 +93,24 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Ac
 
                 });
         }
-
-        case "SET-USER-PROFILE":{
+        case "SET-USER-PROFILE": {
             return {
                 ...state,
                 profile: action.profile
             }
         }
-
+        case "SET-USER-STATUS": {
+            return {
+                ...state,
+                status: action.status
+            }
+        }
         default:
             return state
     }
 };
 
-
+// ==================ACTION CREATORS =======================//
 export const changeNewTextPostAC = (newText: string) => {
     return {
         type: "CHANGE-NEW-TEXT-POST",
@@ -147,13 +141,39 @@ export const setUserProfileAC = (profile: UserProfileType[]) => {
         profile
     } as const
 }
+export const setUserStatusAC = (status: string) => {
+    return {
+        type: "SET-USER-STATUS",
+        status
+    } as const
+}
 
 
-export const getProfileThunkCreator = (userId: number) =>{
-    return (dispatch: Dispatch<ActionsTypes>) =>{
+
+// ==================THUNK CREATORS =======================//
+export const getProfileThunkCreator = (userId: number) => {
+    return (dispatch: Dispatch<ActionsTypes>) => {
         profileAPI.getProfile(userId)
             .then((data) => {
                 dispatch(setUserProfileAC(data));
+            })
+    }
+}
+export const getStatusThunkCreator = (userId: number) => {
+    return (dispatch: Dispatch<ActionsTypes>) => {
+        profileAPI.getStatus(userId)
+            .then((data) => {
+                dispatch(setUserStatusAC(data));
+            })
+    }
+}
+export const updateStatusThunkCreator = (status: string) => {
+    return (dispatch: Dispatch<ActionsTypes>) => {
+        profileAPI.updateStatus(status)
+            .then((data) => {
+                if (data.resultCode === 0){
+                    dispatch(setUserStatusAC(status));
+                }
             })
     }
 }
