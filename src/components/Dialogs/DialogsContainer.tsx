@@ -20,8 +20,6 @@ class DialogsContainer extends React.Component<any, DialogsContainerType> {
                 dialogsPage={this.props.dialogsPage}
                 addNewMessage={this.props.addNewMessage}
             />
-
-
         )
     }
 }
