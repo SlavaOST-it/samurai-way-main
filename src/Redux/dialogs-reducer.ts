@@ -10,7 +10,7 @@ export type MessagesType = {
 export type MessagesPageType = {
     dialogs: DialogsType[],
     messages: MessagesType[]
-    newMessageText: string
+
 }
 let initialState: MessagesPageType = {
     dialogs: [
@@ -27,37 +27,25 @@ let initialState: MessagesPageType = {
         {id: 4, message: 'ooops'},
         {id: 5, message: 'Sorry hat cat dog free dollars ahaha'}
     ] as Array<MessagesType>,
-    newMessageText: ''
+
 }
 export type AddNewMessageAT = {
     type: "ADD-NEW-MESSAGE",
     newMessageText: string
 }
-export type ChangeNewMessageTextAT = {
-    type: "CHANGE-NEW-MESSAGE-TEXT",
-    newMessage: string
-}
-export type ActionsTypes = AddNewMessageAT | ChangeNewMessageTextAT
+
+export type ActionsTypes = AddNewMessageAT
 
 export const dialogsReducer = (state: MessagesPageType = initialState, action: ActionsTypes): MessagesPageType => {
     switch (action.type) {
-
-        case "CHANGE-NEW-MESSAGE-TEXT": {
-            return ({
-                ...state,
-                newMessageText: action.newMessage
-            })
-        }
-
         case "ADD-NEW-MESSAGE": {
             const newMessage: MessagesType = {
                 id: new Date().getTime(),
-                message: state.newMessageText.trim()
+                message: action.newMessageText.trim()
             }
             return ({
                     ...state,
-                    newMessageText: "",
-                    messages: [...state.messages, newMessage]
+                   messages: [...state.messages, newMessage]
                 }
             )
         }
@@ -71,11 +59,5 @@ export const addNewMessageAC = (text: string): AddNewMessageAT => {
     return {
         type: "ADD-NEW-MESSAGE",
         newMessageText: text
-    }
-}
-export const changeNewMessageTextAC = (newMessage: string): ChangeNewMessageTextAT => {
-    return {
-        type: "CHANGE-NEW-MESSAGE-TEXT",
-        newMessage: newMessage
     }
 }
