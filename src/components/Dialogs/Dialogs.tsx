@@ -1,17 +1,15 @@
-import React, {ChangeEvent} from 'react';
+import React from 'react';
 import s from './Dialogs.module.css'
 import Message from "./Message/Message";
 import DialogItem from "./DialogItem/DialogItem";
-import logoSend from "../img/logo/icons-message-email-send.png";
 import {MessagesPageType} from "../../Redux/dialogs-reducer";
-
+import {AddMessageForm} from "./Message/AddMessageForm";
 
 
 type DialogsPropsType = {
     dialogsPage: MessagesPageType
-    addNewMessage: (newMessageText: string)=>void,
-    onChangeNewMessageText: (e: ChangeEvent<HTMLTextAreaElement>) => void
-  }
+    addNewMessage: (newMessageText: string) => void
+}
 
 
 const Dialogs = (props: DialogsPropsType) => {
@@ -24,16 +22,6 @@ const Dialogs = (props: DialogsPropsType) => {
         return <Message key={m.id} message={m.message}/>
     })
 
-    // коллбэк функция которая вызвывает функцию из стейта для добавления сообщения
-    const addNewMessage = () => {
-        props.addNewMessage(props.dialogsPage.newMessageText)
-    }
-
-    // коллбэк функция которая вызвывает функцию из стейта для изменения нового сообщения
-    const onChangeNewMessageText = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        props.onChangeNewMessageText(e)
-    }
-
     return (
         <div className={s.dialogs}>
             <ul className={s.dialogs_items}>
@@ -42,16 +30,11 @@ const Dialogs = (props: DialogsPropsType) => {
 
             <div className={s.messages}>
                 {messagesElements}
-                <textarea
-                    className={s.textArea}
-                    value={props.dialogsPage.newMessageText}
-                    onChange={onChangeNewMessageText}>
-
-                </textarea>
-                <button onClick={addNewMessage}><img className={s.logo_send} src={logoSend} alt={'send'}/></button>
+                <AddMessageForm/>
             </div>
         </div>
     )
 }
+
 
 export default Dialogs
