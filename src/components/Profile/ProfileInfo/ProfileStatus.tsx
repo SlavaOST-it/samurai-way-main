@@ -10,9 +10,12 @@ export const ProfileStatus = (props: ProfileStatusType) => {
     const [localStatus, setLocalStatus] = useState<string>(props.status)
 
     const changeMode = () => {
+        if (localStatus.trim() !== null) {
+            props.updateStatus(localStatus.trim())
+        }
         setEditMode(!editMode)
-        props.updateStatus(localStatus.trim())
     }
+
     const changeStatus = (e: ChangeEvent<HTMLInputElement>) => {
         setLocalStatus(e.currentTarget.value)
     }
@@ -30,4 +33,3 @@ export const ProfileStatus = (props: ProfileStatusType) => {
         </div>
     );
 };
-
