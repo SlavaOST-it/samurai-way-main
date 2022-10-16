@@ -1,0 +1,20 @@
+.status {
+    font-size: 18px;
+}
+
+.inputStatus {
+    height: 25px;
+    border: 1px solid black;
+    border-radius: 5px;
+}
+
+.errorSpan {
+    color: red;
+    /*font-size: 18px;*/
+    font-weight: bold;
+    margin-left: 10px;
+    padding: 4px 8px;
+
+    background-color: #ff8e8e;
+    border-radius: 5px;
+}
