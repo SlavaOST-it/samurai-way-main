@@ -1,30 +1,36 @@
 import React from 'react';
 import s from './Login.module.css'
 import {useFormik} from "formik";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {loginThunkCreator} from "../../Redux/auth-reducer";
+import {AppStateType} from "../../Redux/redux-store";
+import {Redirect} from "react-router-dom";
 
 export type FormDataType = {
-    login?: string,
+    email?: string,
     password?: string,
-    rememberMe?: boolean
+    rememberMe?: boolean,
+    captcha?: string
 }
 
 export const Login = () => {
+    const isAuth = useSelector<AppStateType, boolean>(state => state.auth.isAuth)
     const dispatch = useDispatch()
 
 
     const formik = useFormik({
         initialValues: {
-            login: '',
+            email: '',
             password: '',
-            rememberMe: false
+            rememberMe: false,
+            captcha: ''
         },
         validate: (values) => {
             const errors: FormDataType = {}
-            if (!values.login) {
-                errors.login = 'Required'
-            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.login)) {
-                errors.login = 'Invalid email address'
+            if (!values.email) {
+                errors.email = 'Required'
+            } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+                errors.email = 'Invalid email address'
             }
             if (!values.password) {
                 errors.password = 'Required'
@@ -34,31 +40,37 @@ export const Login = () => {
             return errors
         },
         onSubmit: values => {
-           alert(JSON.stringify(values))
+            dispatch(loginThunkCreator(values))
             formik.resetForm()
         }
     })
 
+if (isAuth){
+    return <Redirect to={'/profile'}/>
+}
 
     return (
         <form onSubmit={formik.handleSubmit}>
 
                 <input
-                    className={s.input_login}
-                    id={"login"}
-                    // name="login"
-                    // typeof="login"
+                    className={s.input_email}
+                    id={"email"}
+                    placeholder={"E-mail"}
+                    // name="email"
+                    // typeof="email"
                     // onChange={formik.handleChange}
-                    // value={formik.values.login}
-                    {...formik.getFieldProps('login')}
+                    // value={formik.values.email}
+                    {...formik.getFieldProps('email')}
                 />
-                {formik.touched.login && formik.errors.login &&
-                    <div style={{color: 'red'}}>{formik.errors.login}</div>}
+                {formik.touched.email && formik.errors.email &&
+                    <div style={{color: 'red'}}>{formik.errors.email}</div>}
 
             <div>
                 <input
                     className={s.input_password}
                     id={"password"}
+                    placeholder={"Password"}
+                    type="password"
                     // name="password"
                     // typeof="password"
                     // onChange={formik.handleChange}
@@ -96,7 +108,7 @@ export const Login = () => {
 //     return (
 //             <form onSubmit={props.handleSubmit}>
 //                 <div >
-//                     <Field className={s.input_login} placeholder={"Login"} name={"login"} component={"input"}/>
+//                     <Field className={s.input_login} placeholder={"Login"} name={"email"} component={"input"}/>
 //                 </div>
 //                 <div >
 //                     <Field className={s.input_password} placeholder={"Password"} name={"password"} component={"input"}/>
@@ -113,7 +125,7 @@ export const Login = () => {
 //
 // // контейнерная компонента
 // const LoginReduxForm = reduxForm<FormDataType>({
-//     form: 'login'
+//     form: 'email'
 // })(LoginForm)
 //
 //
