@@ -3,32 +3,38 @@ import logo from '../img/logo/logo.png';
 import s from './Header.module.css';
 import {NavLink} from "react-router-dom";
 import photo from "../img/logo/user-logo.png"
+import imgLogout from "../img/logo/logout-svgrepo-com.svg"
 
 
 export type HeaderType = {
     isAuth: boolean,
+    logout: () => void,
     login: string | null,
     userPhoto: any
 }
 
 const Header = (props: HeaderType) => {
 
-    // const userPhoto = props.userPhoto.photos.large
-    //     ? props.userPhoto.photos.large
-    //     : photo
+    // const userPhoto = props.userPhoto.photos.small
+    //
+    //     ? props.userPhoto.photos.small
+    //      : photo
 
     return (
         <header className={s.header}>
             <img className={s.header_logo}
                  src={logo}
                  alt="logo"/>
-            <div className={s.loginBlock}>
+            <div>
                 {props.isAuth
-                    ? <div>
-                        <img className={s.userPhoto} src={""} alt={"ss"}/>
+                    ? <div className={s.loginBlock}>
+                        <img className={s.userPhoto} src={photo} alt={"user photo"}/>
+                        <button
+                            className={s.btnLogout}
+                            onClick={props.logout}
+                        ><img src={imgLogout} alt={"logout"}/></button>
                     </div>
-                    : <NavLink to={'/login'}>Login</NavLink>}
-
+                    : <NavLink to={'/email'}>Login</NavLink>}
             </div>
         </header>
     );
