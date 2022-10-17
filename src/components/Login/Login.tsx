@@ -53,7 +53,7 @@ if (isAuth){
         <form onSubmit={formik.handleSubmit}>
 
                 <input
-                    className={s.input_email}
+                    className={s.input}
                     id={"email"}
                     placeholder={"E-mail"}
                     // name="email"
@@ -67,7 +67,7 @@ if (isAuth){
 
             <div>
                 <input
-                    className={s.input_password}
+                    className={s.input}
                     id={"password"}
                     placeholder={"Password"}
                     type="password"
@@ -102,42 +102,4 @@ if (isAuth){
         </form>
     )
 }
-
-
-// export const LoginForm: React.FC<InjectedFormProps<FormDataType>> = (props) => {
-//     return (
-//             <form onSubmit={props.handleSubmit}>
-//                 <div >
-//                     <Field className={s.input_login} placeholder={"Login"} name={"email"} component={"input"}/>
-//                 </div>
-//                 <div >
-//                     <Field className={s.input_password} placeholder={"Password"} name={"password"} component={"input"}/>
-//                 </div>
-//                 <div >
-//                     <Field className={s.checkbox} component={"input"} name={"rememberMe"} type={"checkbox"}/> remember me
-//                 </div>
-//                 <div >
-//                     <button className={s.btn_login}>Login</button>
-//                 </div>
-//             </form>
-//     );
-// };
-//
-// // контейнерная компонента
-// const LoginReduxForm = reduxForm<FormDataType>({
-//     form: 'email'
-// })(LoginForm)
-//
-//
-// export const Login = () => {
-//     const onSubmit = (formData: FormDataType) =>{
-//         console.log(formData)
-//     }
-//     return (
-//         <div>
-//             <h1>Login</h1>
-//            <LoginReduxForm onSubmit={onSubmit}/>
-//         </div>
-//     );
-// };
 

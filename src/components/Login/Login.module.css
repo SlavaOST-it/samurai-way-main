@@ -1,12 +1,10 @@
-.input_login {
+.input{
+    height: 30px;
+    width: 200px;
     margin: 5px 0;
     border-radius: 5px;
 }
 
-.input_password {
-    margin: 5px 0;
-    border-radius: 5px;
-}
 
 .checkbox {
     margin: 5px 0;
