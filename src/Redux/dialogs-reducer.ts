@@ -34,9 +34,9 @@ export type AddNewMessageAT = {
     newMessageText: string
 }
 
-export type ActionsTypes = AddNewMessageAT
+export type DialogsActionsTypes = AddNewMessageAT
 
-export const dialogsReducer = (state: MessagesPageType = initialState, action: ActionsTypes): MessagesPageType => {
+export const dialogsReducer = (state: MessagesPageType = initialState, action: DialogsActionsTypes): MessagesPageType => {
     switch (action.type) {
         case "ADD-NEW-MESSAGE": {
             const newMessage: MessagesType = {

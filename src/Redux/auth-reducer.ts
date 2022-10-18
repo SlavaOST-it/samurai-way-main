@@ -1,5 +1,7 @@
 import {Dispatch} from "redux";
 import {authAPI, LoginParamsType} from "../api/api";
+import {AppDispatch, AppThunk} from "./redux-store";
+import {followThunkCreation} from "./users-reducer";
 
 
 export type SetUserDataAT = ReturnType<typeof setAuthUserDataAC>
@@ -20,9 +22,9 @@ let initialState = {
 } as const;
 
 
-export type ActionsTypes = SetUserDataAT | ChangeAuthStatusAT
+export type AuthActionsTypes = SetUserDataAT | ChangeAuthStatusAT
 
-export const authReducer = (state: UsersPageType = initialState, action: ActionsTypes): UsersPageType => {
+export const authReducer = (state: UsersPageType = initialState, action: AuthActionsTypes): UsersPageType => {
     switch (action.type) {
         case "SET-USER-DATA": {
             return {
@@ -46,14 +48,14 @@ export const authReducer = (state: UsersPageType = initialState, action: Actions
 export const setAuthUserDataAC = (userId: number | null, email: string | null, login: string | null) => {
     return {type: "SET-USER-DATA", payload: [userId, email, login]} as const
 }
-export const changeAuthStatusAC = (isAuth: boolean) =>{
+export const changeAuthStatusAC = (isAuth: boolean) => {
     return {type: "CHANGE-AUTH-STATUS", isAuth} as const
 }
 
 
 // ===== ThunkCreator ===== //
 export const getAuthThunkCreator = () => {
-    return (dispatch: Dispatch<ActionsTypes>) => {
+    return (dispatch: AppDispatch) => {
         authAPI.getAuth()
             .then((data) => {
                 if (data.resultCode === 0) {
@@ -62,12 +64,12 @@ export const getAuthThunkCreator = () => {
                     dispatch(changeAuthStatusAC(true))
                 }
             })
-            .catch(error=>{
+            .catch(error => {
                 alert(error)
             })
     }
 }
-export const loginThunkCreator = (data: LoginParamsType) => (dispatch: any) => {     // DISPATCH TYPE !!!!!!!
+export const loginThunkCreator = (data: LoginParamsType): AppThunk => (dispatch) => {     // DISPATCH TYPE !!!!!!!
     authAPI.login(data)
         .then((res) => {
             if (res.data.resultCode === 0) {
@@ -78,7 +80,7 @@ export const loginThunkCreator = (data: LoginParamsType) => (dispatch: any) => {
             alert(error)
         })
 }
-export const logoutThunkCreator = () => (dispatch: Dispatch<ActionsTypes>) => {
+export const logoutThunkCreator = () => (dispatch: Dispatch<AuthActionsTypes>) => {
     authAPI.logout()
         .then((res) => {
             if (res.data.resultCode === 0) {

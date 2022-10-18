@@ -36,7 +36,7 @@ export type SetCurrentPageAT = ReturnType<typeof setCurrentPageAC>
 export type SetUsersTotalCountAT = ReturnType<typeof setUsersTotalCountAC>
 export type ToggleIsFetchingAT = ReturnType<typeof toggleIsFetchingAC>
 export type toggleFollowingDisableAT = ReturnType<typeof toggleFollowingDisableAC>
-export type ActionsTypes =
+export type UsersActionsTypes =
     FollowAT
     | UnfollowAT
     | SetUsersAT
@@ -45,7 +45,7 @@ export type ActionsTypes =
     | ToggleIsFetchingAT
     | toggleFollowingDisableAT
 
-export const usersReducer = (state: UsersPageType = initialState, action: ActionsTypes): UsersPageType => {
+export const usersReducer = (state: UsersPageType = initialState, action: UsersActionsTypes): UsersPageType => {
     switch (action.type) {
         case "FOLLOW":
             return {
@@ -131,7 +131,7 @@ export const toggleFollowingDisableAC = (isFetching: boolean, userId: number) =>
 
 
 export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
-    return (dispatch: Dispatch<ActionsTypes>) => {
+    return (dispatch: Dispatch<UsersActionsTypes>) => {
         dispatch(toggleIsFetchingAC(true))
         usersAPI.getUsers(currentPage, pageSize)
             .then((data) => {
@@ -143,7 +143,7 @@ export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
 }
 
 export const followThunkCreation = (userId: number) => {
-    return (dispatch: Dispatch<ActionsTypes>) => {
+    return (dispatch: Dispatch<UsersActionsTypes>) => {
         dispatch(toggleFollowingDisableAC(true, userId))
         usersAPI.follow(userId)
             .then((data) => {
@@ -155,7 +155,7 @@ export const followThunkCreation = (userId: number) => {
     }
 }
 export const unfollowThunkCreation = (userId: number) => {
-    return (dispatch: Dispatch<ActionsTypes>) => {
+    return (dispatch: Dispatch<UsersActionsTypes>) => {
         dispatch(toggleFollowingDisableAC(true, userId));
         usersAPI.unfollow(userId)
             .then((data) => {

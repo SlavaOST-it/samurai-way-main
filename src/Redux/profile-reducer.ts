@@ -4,7 +4,7 @@ import {profileAPI} from "../api/api";
 export type AddPostAT = ReturnType<typeof addPostAC>
 export type SetUserProfileAT = ReturnType<typeof setUserProfileAC>
 export type SetUserStatusAT = ReturnType<typeof setUserStatusAC>
-export type ActionsTypes =
+export type ProfileActionsTypes =
     | AddPostAT
     | SetUserProfileAT
     | SetUserStatusAT
@@ -58,7 +58,7 @@ let initialState: ProfilePageType = {
 };
 
 
-export const profileReducer = (state: ProfilePageType = initialState, action: ActionsTypes): ProfilePageType => {
+export const profileReducer = (state: ProfilePageType = initialState, action: ProfileActionsTypes): ProfilePageType => {
     switch (action.type) {
         case "ADD-POST": {
             const newPost: PostsDataType = {
@@ -114,7 +114,7 @@ export const setUserStatusAC = (status: string) => {
 
 // ==================THUNK CREATORS =======================//
 export const getProfileThunkCreator = (userId: number) => {
-    return (dispatch: Dispatch<ActionsTypes>) => {
+    return (dispatch: Dispatch<ProfileActionsTypes>) => {
         profileAPI.getProfile(userId)
             .then((data) => {
                 dispatch(setUserProfileAC(data));
@@ -122,7 +122,7 @@ export const getProfileThunkCreator = (userId: number) => {
     }
 }
 export const getStatusThunkCreator = (userId: number) => {
-    return (dispatch: Dispatch<ActionsTypes>) => {
+    return (dispatch: Dispatch<ProfileActionsTypes>) => {
         profileAPI.getStatus(userId)
             .then((data) => {
                 dispatch(setUserStatusAC(data));
@@ -130,7 +130,7 @@ export const getStatusThunkCreator = (userId: number) => {
     }
 }
 export const updateStatusThunkCreator = (status: string) => {
-    return (dispatch: Dispatch<ActionsTypes>) => {
+    return (dispatch: Dispatch<ProfileActionsTypes>) => {
         profileAPI.updateStatus(status)
             .then((data) => {
                 if (data.resultCode === 0){
