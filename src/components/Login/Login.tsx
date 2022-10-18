@@ -15,6 +15,7 @@ export type FormDataType = {
 
 export const Login = () => {
     const isAuth = useSelector<AppStateType, boolean>(state => state.auth.isAuth)
+    const errorLogin = useSelector<AppStateType, string | null>(state => state.auth.errorLogin)
     const dispatch = useDispatch()
 
 
@@ -39,31 +40,31 @@ export const Login = () => {
             }
             return errors
         },
-        onSubmit: values => {
+        onSubmit: (values) => {
             dispatch(loginThunkCreator(values))
             formik.resetForm()
         }
     })
 
-if (isAuth){
-    return <Redirect to={'/profile'}/>
-}
+    if (isAuth) {
+        return <Redirect to={'/profile'}/>
+    }
 
     return (
         <form onSubmit={formik.handleSubmit}>
 
-                <input
-                    className={s.input}
-                    id={"email"}
-                    placeholder={"E-mail"}
-                    // name="email"
-                    // typeof="email"
-                    // onChange={formik.handleChange}
-                    // value={formik.values.email}
-                    {...formik.getFieldProps('email')}
-                />
-                {formik.touched.email && formik.errors.email &&
-                    <div style={{color: 'red'}}>{formik.errors.email}</div>}
+            <input
+                className={s.input}
+                id={"email"}
+                placeholder={"E-mail"}
+                // name="email"
+                // typeof="email"
+                // onChange={formik.handleChange}
+                // value={formik.values.email}
+                {...formik.getFieldProps('email')}
+            />
+            {formik.touched.email && formik.errors.email &&
+                <div style={{color: 'red'}}>{formik.errors.email}</div>}
 
             <div>
                 <input
@@ -80,6 +81,9 @@ if (isAuth){
                 {formik.touched.password && formik.errors.password &&
                     <div style={{color: 'red'}}>{formik.errors.password}</div>}
             </div>
+
+            {errorLogin && <div className={s.warning}>{errorLogin}</div>}
+
             <div>
                 <input
                     className={s.checkbox}
@@ -94,6 +98,7 @@ if (isAuth){
                 <button
                     type={'submit'}
                     className={s.btn_login}
+                    disabled={formik.isSubmitting}
                 >Login
                 </button>
             </div>

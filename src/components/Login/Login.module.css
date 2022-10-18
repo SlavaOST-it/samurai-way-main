@@ -29,3 +29,15 @@
     text-align: center;
     text-decoration: none;
 }
+
+.warning {
+    height: 70px;
+    display: table-cell;
+    vertical-align: middle;
+    /*max-width: 450px;*/
+    min-width: 200px;
+    border-radius: 5px;
+    padding: 20px 35px;
+    color: #D8000C;
+    background: #FFBABA url('https://i.imgur.com/GnyDvKN.png') no-repeat;
+}
