@@ -1,36 +1,37 @@
 import {Dispatch} from "redux";
 import {authAPI, LoginParamsType} from "../api/api";
 import {AppDispatch, AppThunk} from "./redux-store";
-import {followThunkCreation} from "./users-reducer";
 
 
 export type SetUserDataAT = ReturnType<typeof setAuthUserDataAC>
 export type ChangeAuthStatusAT = ReturnType<typeof changeAuthStatusAC>
+export type SetErrorLoginAT = ReturnType<typeof setErrorLogin>
 
 export type UsersPageType = {
     userId: number | null,
     email: string | null,
     login: string | null,
-    isAuth: boolean
+    isAuth: boolean,
+    errorLogin: string | null
 }
 
 let initialState = {
     userId: null,
     email: null,
     login: null,
-    isAuth: false
+    isAuth: false,
+    errorLogin: null
 } as const;
 
 
-export type AuthActionsTypes = SetUserDataAT | ChangeAuthStatusAT
+export type AuthActionsTypes = SetUserDataAT | ChangeAuthStatusAT | SetErrorLoginAT
 
 export const authReducer = (state: UsersPageType = initialState, action: AuthActionsTypes): UsersPageType => {
     switch (action.type) {
         case "SET-USER-DATA": {
             return {
                 ...state,
-                ...action.payload,
-                // isAuth: true
+                ...action.payload
             }
         }
         case "CHANGE-AUTH-STATUS":
@@ -38,7 +39,11 @@ export const authReducer = (state: UsersPageType = initialState, action: AuthAct
                 ...state,
                 isAuth: action.isAuth
             }
-
+        case "SET-ERROR-LOGIN":
+            return {
+                ...state,
+                errorLogin: action.error
+            }
         default:
             return state
     }
@@ -50,6 +55,9 @@ export const setAuthUserDataAC = (userId: number | null, email: string | null, l
 }
 export const changeAuthStatusAC = (isAuth: boolean) => {
     return {type: "CHANGE-AUTH-STATUS", isAuth} as const
+}
+export const setErrorLogin = (error: string | null) => {
+    return {type: "SET-ERROR-LOGIN", error} as const
 }
 
 
@@ -74,6 +82,10 @@ export const loginThunkCreator = (data: LoginParamsType): AppThunk => (dispatch)
         .then((res) => {
             if (res.data.resultCode === 0) {
                 dispatch(getAuthThunkCreator())
+            }
+            else {
+                const message = res.data.messages.length ? res.data.messages[0] : "Some error"
+                dispatch(setErrorLogin(message))
             }
         })
         .catch((error) => {
