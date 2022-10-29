@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import {BrowserRouter, Route} from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
@@ -12,10 +12,24 @@ import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import {Login} from "./components/Login/Login";
-
+import {useDispatch, useSelector} from "react-redux";
+import {AppStateType} from "./Redux/redux-store";
+import {initializeAppTC} from "./Redux/app-reducer";
+import {Preloader} from "./components/common/preloader/Preloader";
 
 
 const App = () => {
+    const isInitialized = useSelector<AppStateType, boolean>(state => state.app.isInitialized)
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch(initializeAppTC())
+    }, [])
+
+    if(!isInitialized){
+        return <Preloader/>
+    }
+
     return (
         <BrowserRouter>
             <div className="container">
@@ -39,7 +53,8 @@ const App = () => {
                     <Route path='sidebar'
                            render={() => <SideBar/>}/>
 
-                    <Route path='/login' render={() =><Login/>}/>
+                    <Route path='/login' render={() => <Login/>}/>
+
 
                 </div>
                 <Footer/>
