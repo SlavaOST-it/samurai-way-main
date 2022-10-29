@@ -5,7 +5,8 @@ import {sidebarReducer} from "./sidebar-reducer";
 import {UsersActionsTypes, usersReducer} from "./users-reducer";
 import {AuthActionsTypes, authReducer} from "./auth-reducer";
 import thunkMiddleware, {ThunkAction, ThunkDispatch} from "redux-thunk"
-import {reducer as formReducer} from "redux-form";
+// import {reducer as formReducer} from "redux-form";
+import {AppActionsTypes, appReducer} from "./app-reducer";
 
 
 export const rootReducer = combineReducers({
@@ -14,11 +15,12 @@ export const rootReducer = combineReducers({
     usersPage: usersReducer,
     sidebar: sidebarReducer,
     auth: authReducer,
-    form: formReducer
+    app: appReducer,
+    // form: formReducer
 })
 
 // ===== Принимаем типизацию всех редьюсеров ===== //
-type AppActionType = AuthActionsTypes | UsersActionsTypes | ProfileActionsTypes | DialogsActionsTypes
+type ReduxActionType = AuthActionsTypes | UsersActionsTypes | ProfileActionsTypes | DialogsActionsTypes | AppActionsTypes
 
 
 export let store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
@@ -26,9 +28,9 @@ export type AppStateType = ReturnType<typeof rootReducer>
 export type RootState = ReturnType<typeof store.getState>
 
 // ===== Типизация Диспатча для Экшенов и Санок ===== //
-export type AppDispatch = ThunkDispatch<RootState, unknown, AppActionType>
+export type AppDispatch = ThunkDispatch<RootState, unknown, ReduxActionType>
 
 // ===== Типизация того что возвращает нам Санка ===== //
-export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, AppActionType>
+export type AppThunk<ReturnType = void> = ThunkAction<ReturnType, RootState, unknown, ReduxActionType>
 //@ts-ignore
 window.store = store
