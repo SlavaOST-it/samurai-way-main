@@ -21,7 +21,8 @@ type ProfileContainerType = {
     getProfile: (userId: number) => void,
     getStatus: (userId: number) => void,
     updateStatus: (status: string) => void,
-    isAuth: boolean
+    isAuth: boolean,
+    authorizedUserId: number
 }
 
 
@@ -29,7 +30,7 @@ class ProfileContainer extends React.Component<any, ProfileContainerType> {
     componentDidMount() {
         let userId = this.props.match.params.userId
         if (!userId) {
-            userId = 25342
+            userId = 25342                                                     //=== HARD CODE !!!!!! ===//
         }
         this.props.getProfile(userId)
         this.props.getStatus(userId)
@@ -50,13 +51,15 @@ class ProfileContainer extends React.Component<any, ProfileContainerType> {
 
 type MapStatePropsType = {
     profile: UserProfileType[] | null,
-    status: any
+    status: any,
+    authorizedUserId: number | null
 }
 
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         profile: state.profilePage.profile,
-        status: state.profilePage.status
+        status: state.profilePage.status,
+        authorizedUserId: state.auth.userId
     }
 }
 

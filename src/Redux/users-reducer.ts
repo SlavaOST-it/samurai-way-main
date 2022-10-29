@@ -114,8 +114,8 @@ export const unfollowAC = (userId: number) => {
 export const setUsersAC = (users: UsersType[]) => {
     return {type: "SET-USERS", users} as const
 }
-export const setCurrentPageAC = (currentPage: number) => {
-    return {type: "SET-CURRENT-PAGE", currentPage} as const
+export const setCurrentPageAC = (requestPage: number) => {
+    return {type: "SET-CURRENT-PAGE", currentPage: requestPage} as const
 }
 export const setUsersTotalCountAC = (totalUsersCount: number) => {
     return {type: "SET-USERS-TOTAL-COUNT", totalUsersCount} as const
@@ -130,10 +130,11 @@ export const toggleFollowingDisableAC = (isFetching: boolean, userId: number) =>
 
 
 
-export const getUsersThunkCreator = (currentPage: number, pageSize: number) => {
+export const getUsersThunkCreator = (requestPage: number, pageSize: number) => {
     return (dispatch: Dispatch<UsersActionsTypes>) => {
         dispatch(toggleIsFetchingAC(true))
-        usersAPI.getUsers(currentPage, pageSize)
+        dispatch(setCurrentPageAC(requestPage))
+        usersAPI.getUsers(requestPage, pageSize)
             .then((data) => {
                 dispatch(toggleIsFetchingAC(false))
                 dispatch(setUsersAC(data.items));
