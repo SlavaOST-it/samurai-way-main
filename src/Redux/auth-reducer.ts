@@ -62,22 +62,20 @@ export const setErrorLogin = (error: string | null) => {
 
 
 // ===== ThunkCreator ===== //
-export const getAuthThunkCreator = () => {
-    return (dispatch: AppDispatch) => {
-        authAPI.getAuth()
-            .then((data) => {
-                if (data.resultCode === 0) {
-                    let {id, email, login} = data.data
-                    dispatch(setAuthUserDataAC(id, email, login))
-                    dispatch(changeAuthStatusAC(true))
-                }
-            })
-            .catch(error => {
-                alert(error)
-            })
-    }
+export const getAuthThunkCreator = () => (dispatch: AppDispatch) => {
+    return authAPI.getAuth()
+        .then((data) => {
+            if (data.resultCode === 0) {
+                let {id, email, login} = data.data
+                dispatch(setAuthUserDataAC(id, email, login))
+                dispatch(changeAuthStatusAC(true))
+            }
+        })
+        .catch(error => {
+            alert(error)
+        })
 }
-export const loginThunkCreator = (data: LoginParamsType): AppThunk => (dispatch) => {     // DISPATCH TYPE !!!!!!!
+export const loginThunkCreator = (data: LoginParamsType): AppThunk => (dispatch) => {
     authAPI.login(data)
         .then((res) => {
             if (res.data.resultCode === 0) {
