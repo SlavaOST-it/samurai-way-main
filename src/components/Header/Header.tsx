@@ -1,19 +1,24 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import logo from '../img/logo/logo.png';
 import s from './Header.module.css';
 import photo from "../img/logo/user-logo.png"
 import imgLogout from "../img/logo/logout-svgrepo-com.svg"
 
-
 export type HeaderType = {
     isAuth: boolean,
     logout: () => void,
-    userPhoto: any
+    userPhoto: string
 }
 
 const Header = (props: HeaderType) => {
+    const [userPhoto, setUserPhoto] = useState(photo)
 
-     // const userPhoto = props.userPhoto.photos.small ? props.userPhoto.photos.small : photo
+    useEffect(()=>{
+        if(props.userPhoto){
+            setUserPhoto(props.userPhoto)
+        }
+    },[props.userPhoto])
+
 
     return (
         <header className={s.header}>
@@ -23,7 +28,7 @@ const Header = (props: HeaderType) => {
             <div>
                 {props.isAuth &&
                     <div className={s.loginBlock}>
-                        <img className={s.userPhoto} src={photo} alt={"user photo"}/>
+                        <img className={s.userPhoto} src={userPhoto} alt={"user photo"}/>
                         <button
                             className={s.btnLogout}
                             onClick={props.logout}

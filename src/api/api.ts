@@ -47,6 +47,12 @@ export const profileAPI = {
             .then(response => {
                 return response.data
             })
+    },
+    updatePhoto(photo: string) {
+        return instance.put(`/profile/photo`, {photo})
+            .then(response =>{
+                return response.data
+            })
     }
 }
 

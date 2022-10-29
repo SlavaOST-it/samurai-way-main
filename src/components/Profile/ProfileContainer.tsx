@@ -51,7 +51,7 @@ class ProfileContainer extends React.Component<any, ProfileContainerType> {
 
 type MapStatePropsType = {
     profile: UserProfileType[] | null,
-    status: any,
+    status: string,
     authorizedUserId: number | null
 }
 

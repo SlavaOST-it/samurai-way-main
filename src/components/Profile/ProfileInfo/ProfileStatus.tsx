@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useState} from 'react';
+import React, {ChangeEvent, useEffect, useState} from 'react';
 import s from "./ProfileStatus.module.css"
 
 export type ProfileStatusType = {
@@ -10,6 +10,10 @@ export const ProfileStatus = (props: ProfileStatusType) => {
     const [editMode, setEditMode] = useState<boolean>(false)
     const [localStatus, setLocalStatus] = useState<string>(props.status)
     const [error, setError] = useState<string | null>(null)
+
+    useEffect(()=>{
+        setLocalStatus(props.status)
+    },[props.status])
 
     const changeMode = () => {
         if (localStatus.trim() !== null) {
