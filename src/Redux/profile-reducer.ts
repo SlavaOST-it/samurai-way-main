@@ -1,5 +1,6 @@
 import {Dispatch} from "redux";
 import {profileAPI} from "../api/api";
+import axios, {AxiosError} from "axios";
 
 export type AddPostAT = ReturnType<typeof addPostAC>
 export type SetUserProfileAT = ReturnType<typeof setUserProfileAC>
@@ -61,35 +62,32 @@ let initialState: ProfilePageType = {
     ]
 };
 
-
 export const profileReducer = (state: ProfilePageType = initialState, action: ProfileActionsTypes): ProfilePageType => {
     switch (action.type) {
-        case "ADD-POST": {
+        case "PROFILE/ADD-POST": {
             const newPost: PostsDataType = {
                 id: new Date().getTime(),
                 message: action.postText.trim(),
                 likesCount: 0
             }
-            return (
-                {
-                    ...state,
-                    posts: [newPost, ...state.posts],
-
-                });
+            return {
+                ...state,
+                posts: [newPost, ...state.posts]
+            };
         }
-        case "SET-USER-PROFILE": {
+        case "PROFILE/SET-USER-PROFILE": {
             return {
                 ...state,
                 profile: action.profile
             }
         }
-        case "SET-USER-STATUS": {
+        case "PROFILE/SET-USER-STATUS": {
             return {
                 ...state,
                 status: action.status
             }
         }
-        case "SET-USER-PHOTO":{
+        case "PROFILE/SET-USER-PHOTO": {
             return {
                 ...state,
                 photoUser: action.photo
@@ -101,66 +99,69 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Pr
 };
 
 // ==================ACTION CREATORS =======================//
-export const addPostAC = (postText: string) => {
-    return {
-        type: "ADD-POST",
-        postText
-    } as const
-}
-export const setUserProfileAC = (profile: UserProfileType[]) => {
-    return {
-        type: "SET-USER-PROFILE",
-        profile
-    } as const
-}
-export const setUserStatusAC = (status: string) => {
-    return {
-        type: "SET-USER-STATUS",
-        status
-    } as const
-}
-export const setUserPhoto = (photo: string) => {
-    return {
-        type: "SET-USER-PHOTO",
-        photo
-    } as const
-}
-
+export const addPostAC = (postText: string) => ({type: "PROFILE/ADD-POST", postText} as const)
+export const setUserProfileAC = (profile: UserProfileType[]) => ({type: "PROFILE/SET-USER-PROFILE", profile} as const)
+export const setUserStatusAC = (status: string) => ({type: "PROFILE/SET-USER-STATUS", status} as const)
+export const setUserPhoto = (photo: string) => ({type: "PROFILE/SET-USER-PHOTO", photo} as const)
 
 // ==================THUNK CREATORS =======================//
-export const getProfileThunkCreator = (userId: number) => {
-    return (dispatch: Dispatch<ProfileActionsTypes>) => {
-        profileAPI.getProfile(userId)
-            .then((data) => {
-                dispatch(setUserProfileAC(data));
-            })
+export const getProfileThunkCreator = (userId: number) => async (dispatch: Dispatch<ProfileActionsTypes>) => {
+    try {
+        let res = await profileAPI.getProfile(userId)
+        dispatch(setUserProfileAC(res))
+    } catch (e) {
+        const err = e as Error | AxiosError
+        if (axios.isAxiosError(err)) {
+            const error = err.response?.data
+                ? (err.response.data as ({ error: string })).error
+                : err.message
+            alert(error)
+        }
     }
 }
-export const getStatusThunkCreator = (userId: number) => {
-    return (dispatch: Dispatch<ProfileActionsTypes>) => {
-        profileAPI.getStatus(userId)
-            .then((data) => {
-                dispatch(setUserStatusAC(data));
-            })
+export const getStatusThunkCreator = (userId: number) => async (dispatch: Dispatch<ProfileActionsTypes>) => {
+    try {
+        let res = await profileAPI.getStatus(userId)
+        dispatch(setUserStatusAC(res))
+    } catch (e) {
+        const err = e as Error | AxiosError
+        if (axios.isAxiosError(err)) {
+            const error = err.response?.data
+                ? (err.response.data as ({ error: string })).error
+                : err.message
+            alert(error)
+        }
     }
 }
-export const updateStatusThunkCreator = (status: string) => {
-    return (dispatch: Dispatch<ProfileActionsTypes>) => {
-        profileAPI.updateStatus(status)
-            .then((data) => {
-                if (data.resultCode === 0) {
-                    dispatch(setUserStatusAC(status));
-                }
-            })
+export const updateStatusThunkCreator = (status: string) => async (dispatch: Dispatch<ProfileActionsTypes>) => {
+    try {
+        let res = await profileAPI.updateStatus(status)
+        if (res.resultCode === 0) {
+            dispatch(setUserStatusAC(status));
+        }
+    } catch (e) {
+        const err = e as Error | AxiosError
+        if (axios.isAxiosError(err)) {
+            const error = err.response?.data
+                ? (err.response.data as ({ error: string })).error
+                : err.message
+            alert(error)
+        }
     }
 }
-export const updatePhotoUser = (photo: string) => {
-    return (dispatch: Dispatch<ProfileActionsTypes>) =>{
-        profileAPI.updatePhoto(photo)
-            .then((data)=>{
-                if(data.resultCode === 0){
-                    dispatch(setUserPhoto(data.response.photos.small))
-                }
-            })
+export const updatePhotoUser = (photo: string) => async (dispatch: Dispatch<ProfileActionsTypes>) => {
+    try {
+        let res = await profileAPI.updatePhoto(photo)
+        if (res.resultCode === 0) {
+            dispatch(setUserPhoto(res.response.photos.small))
+        }
+    } catch (e) {
+        const err = e as Error | AxiosError
+        if (axios.isAxiosError(err)) {
+            const error = err.response?.data
+                ? (err.response.data as ({ error: string })).error
+                : err.message
+            alert(error)
+        }
     }
 }

@@ -5,7 +5,6 @@ import {sidebarReducer} from "./sidebar-reducer";
 import {UsersActionsTypes, usersReducer} from "./users-reducer";
 import {AuthActionsTypes, authReducer} from "./auth-reducer";
 import thunkMiddleware, {ThunkAction, ThunkDispatch} from "redux-thunk"
-// import {reducer as formReducer} from "redux-form";
 import {AppActionsTypes, appReducer} from "./app-reducer";
 
 
@@ -16,7 +15,6 @@ export const rootReducer = combineReducers({
     sidebar: sidebarReducer,
     auth: authReducer,
     app: appReducer,
-    // form: formReducer
 })
 
 // ===== Принимаем типизацию всех редьюсеров ===== //

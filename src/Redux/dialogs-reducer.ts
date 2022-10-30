@@ -1,4 +1,3 @@
-
 export type DialogsType = {
     id: number,
     name: string
@@ -30,7 +29,7 @@ let initialState: MessagesPageType = {
 
 }
 export type AddNewMessageAT = {
-    type: "ADD-NEW-MESSAGE",
+    type: "DIALOGS/ADD-NEW-MESSAGE",
     newMessageText: string
 }
 
@@ -38,18 +37,16 @@ export type DialogsActionsTypes = AddNewMessageAT
 
 export const dialogsReducer = (state: MessagesPageType = initialState, action: DialogsActionsTypes): MessagesPageType => {
     switch (action.type) {
-        case "ADD-NEW-MESSAGE": {
+        case "DIALOGS/ADD-NEW-MESSAGE": {
             const newMessage: MessagesType = {
                 id: new Date().getTime(),
                 message: action.newMessageText.trim()
             }
-            return ({
-                    ...state,
-                   messages: [...state.messages, newMessage]
-                }
-            )
+            return {
+                ...state,
+                messages: [...state.messages, newMessage]
+            }
         }
-
         default:
             return state
     }
@@ -57,7 +54,7 @@ export const dialogsReducer = (state: MessagesPageType = initialState, action: D
 
 export const addNewMessageAC = (text: string): AddNewMessageAT => {
     return {
-        type: "ADD-NEW-MESSAGE",
+        type: "DIALOGS/ADD-NEW-MESSAGE",
         newMessageText: text
     }
 }

@@ -11,7 +11,6 @@ export type InitialStateType = {
     isInitialized: boolean
 }
 
-
 let initialState: InitialStateType = {
     status: 'loading',
     error: null,
@@ -27,15 +26,12 @@ export const appReducer = (state = initialState, action: AppActionsTypes) => {
     }
 }
 
-
 // ===== ActionCreators ===== //
 export const setInitializedAC = (value: boolean) => ({type: "APP/SET-INITIALIZED", value} as const)
 
-
 // ===== ThunkCreators ===== //
-export const initializeAppTC = () => (dispatch: AppDispatch) => {
-    let res = dispatch(getAuthThunkCreator())
-    res.then(() => {
-        dispatch(setInitializedAC(true))
-    })
+export const initializeAppTC = () => async (dispatch: AppDispatch) => {
+    await dispatch(getAuthThunkCreator())
+    dispatch(setInitializedAC(true))
+
 }

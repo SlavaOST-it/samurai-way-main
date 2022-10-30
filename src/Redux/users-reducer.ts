@@ -1,6 +1,6 @@
 import {Dispatch} from "redux";
 import {usersAPI} from "../api/api";
-
+import axios, {AxiosError} from "axios";
 
 export type UsersType = {
     "name": string,
@@ -9,7 +9,6 @@ export type UsersType = {
     "photos": { "small": null, "large": null }
     "status": null,
     "followed": boolean
-
 }
 export type UsersPageType = {
     items: UsersType[],
@@ -19,7 +18,6 @@ export type UsersPageType = {
     isFetching: boolean,
     followingDisable: number[]
 }
-
 let initialState: UsersPageType = {
     items: [],
     pageSize: 5,
@@ -28,7 +26,6 @@ let initialState: UsersPageType = {
     isFetching: false,
     followingDisable: []
 };
-
 export type FollowAT = ReturnType<typeof followAC>
 export type UnfollowAT = ReturnType<typeof unfollowAC>
 export type SetUsersAT = ReturnType<typeof setUsersAC>
@@ -47,7 +44,7 @@ export type UsersActionsTypes =
 
 export const usersReducer = (state: UsersPageType = initialState, action: UsersActionsTypes): UsersPageType => {
     switch (action.type) {
-        case "FOLLOW":
+        case "USERS/FOLLOW":
             return {
                 ...state,
                 items: [...state.items.map(u => {
@@ -57,8 +54,7 @@ export const usersReducer = (state: UsersPageType = initialState, action: UsersA
                     return u
                 })]
             }
-
-        case "UNFOLLOW":
+        case "USERS/UNFOLLOW":
             return {
                 ...state,
                 items: [...state.items.map(u => {
@@ -68,32 +64,27 @@ export const usersReducer = (state: UsersPageType = initialState, action: UsersA
                     return u
                 })]
             }
-
-        case "SET-USERS":
+        case "USERS/SET-USERS":
             return {
                 ...state,
                 items: action.users
             }
-
-        case "SET-CURRENT-PAGE":
+        case "USERS/SET-CURRENT-PAGE":
             return {
                 ...state,
                 currentPage: action.currentPage
             }
-
-        case "SET-USERS-TOTAL-COUNT":
+        case "USERS/SET-USERS-TOTAL-COUNT":
             return {
                 ...state,
                 totalUsersCount: action.totalUsersCount
             }
-
-        case "TOGGLE-IS-FETCHING":
+        case "USERS/TOGGLE-IS-FETCHING":
             return {
                 ...state,
                 isFetching: action.isFetching
             }
-
-        case "TOGGLE-IS-FOLLOWING-PROGRESS":
+        case "USERS/TOGGLE-IS-FOLLOWING-PROGRESS":
             return {
                 ...state,
                 followingDisable: action.isFetching
@@ -105,65 +96,78 @@ export const usersReducer = (state: UsersPageType = initialState, action: UsersA
     }
 };
 
-export const followAC = (userId: number) => {
-    return {type: "FOLLOW", userId} as const
-}
-export const unfollowAC = (userId: number) => {
-    return {type: "UNFOLLOW", userId} as const
-}
-export const setUsersAC = (users: UsersType[]) => {
-    return {type: "SET-USERS", users} as const
-}
-export const setCurrentPageAC = (requestPage: number) => {
-    return {type: "SET-CURRENT-PAGE", currentPage: requestPage} as const
-}
-export const setUsersTotalCountAC = (totalUsersCount: number) => {
-    return {type: "SET-USERS-TOTAL-COUNT", totalUsersCount} as const
-}
-export const toggleIsFetchingAC = (isFetching: boolean) => {
-    return {type: "TOGGLE-IS-FETCHING", isFetching} as const
-}
-export const toggleFollowingDisableAC = (isFetching: boolean, userId: number) => {
-    return {type: "TOGGLE-IS-FOLLOWING-PROGRESS", isFetching, userId} as const
-}
+// ===== ACTION CREATORS ===== //
+export const followAC = (userId: number) => ({type: "USERS/FOLLOW", userId} as const)
+export const unfollowAC = (userId: number) => ({type: "USERS/UNFOLLOW", userId} as const)
+export const setUsersAC = (users: UsersType[]) => ({type: "USERS/SET-USERS", users} as const)
+export const setCurrentPageAC = (requestPage: number) => ({
+    type: "USERS/SET-CURRENT-PAGE",
+    currentPage: requestPage
+} as const)
+export const setUsersTotalCountAC = (totalUsersCount: number) => ({
+    type: "USERS/SET-USERS-TOTAL-COUNT",
+    totalUsersCount
+} as const)
+export const toggleIsFetchingAC = (isFetching: boolean) => ({type: "USERS/TOGGLE-IS-FETCHING", isFetching} as const)
+export const toggleFollowingDisableAC = (isFetching: boolean, userId: number) => ({
+        type: "USERS/TOGGLE-IS-FOLLOWING-PROGRESS",
+        isFetching,
+        userId
+    } as const
+)
 
-
-
-
-export const getUsersThunkCreator = (requestPage: number, pageSize: number) => {
-    return (dispatch: Dispatch<UsersActionsTypes>) => {
-        dispatch(toggleIsFetchingAC(true))
-        dispatch(setCurrentPageAC(requestPage))
-        usersAPI.getUsers(requestPage, pageSize)
-            .then((data) => {
-                dispatch(toggleIsFetchingAC(false))
-                dispatch(setUsersAC(data.items));
-                dispatch(setUsersTotalCountAC(data.totalCount))
-            })
+// ===== THUNK CREATORS ===== //
+export const getUsersThunkCreator = (requestPage: number, pageSize: number) => async (dispatch: Dispatch<UsersActionsTypes>) => {
+    dispatch(toggleIsFetchingAC(true))
+    dispatch(setCurrentPageAC(requestPage))
+    try {
+        let res = await usersAPI.getUsers(requestPage, pageSize)
+        dispatch(toggleIsFetchingAC(false))
+        dispatch(setUsersAC(res.items));
+        dispatch(setUsersTotalCountAC(res.totalCount))
+    } catch (e) {
+        const err = e as Error | AxiosError
+        if (axios.isAxiosError(err)) {
+            const error = err.response?.data
+                ? (err.response.data as ({ error: string })).error
+                : err.message
+            alert(error)
+        }
     }
 }
-
-export const followThunkCreation = (userId: number) => {
-    return (dispatch: Dispatch<UsersActionsTypes>) => {
-        dispatch(toggleFollowingDisableAC(true, userId))
-        usersAPI.follow(userId)
-            .then((data) => {
-                if (data.resultCode == 0) {
-                    dispatch(followAC(userId))
-                }
-                dispatch(toggleFollowingDisableAC(false, userId))
-            })
+export const followThunkCreation = (userId: number) => async (dispatch: Dispatch<UsersActionsTypes>) => {
+    dispatch(toggleFollowingDisableAC(true, userId))
+    try {
+        let res = await usersAPI.follow(userId)
+        if (res.resultCode == 0) {
+            dispatch(followAC(userId))
+        }
+        dispatch(toggleFollowingDisableAC(false, userId))
+    } catch (e) {
+        const err = e as Error | AxiosError
+        if (axios.isAxiosError(err)) {
+            const error = err.response?.data
+                ? (err.response.data as ({ error: string })).error
+                : err.message
+            alert(error)
+        }
     }
 }
-export const unfollowThunkCreation = (userId: number) => {
-    return (dispatch: Dispatch<UsersActionsTypes>) => {
-        dispatch(toggleFollowingDisableAC(true, userId));
-        usersAPI.unfollow(userId)
-            .then((data) => {
-                if (data.resultCode == 0) {
-                    dispatch(unfollowAC(userId))
-                }
-               dispatch(toggleFollowingDisableAC(false, userId))
-            })
+export const unfollowThunkCreation = (userId: number) => async (dispatch: Dispatch<UsersActionsTypes>) => {
+    dispatch(toggleFollowingDisableAC(true, userId));
+    try {
+        let res = await usersAPI.unfollow(userId)
+        if (res.resultCode == 0) {
+            dispatch(unfollowAC(userId))
+        }
+        dispatch(toggleFollowingDisableAC(false, userId))
+    } catch (e) {
+        const err = e as Error | AxiosError
+        if (axios.isAxiosError(err)) {
+            const error = err.response?.data
+                ? (err.response.data as ({ error: string })).error
+                : err.message
+            alert(error)
+        }
     }
 }
