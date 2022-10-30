@@ -28,13 +28,13 @@ class HeaderContainer extends React.Component<any, HeaderContainerType> {
 
 type MapStatePropsType = {
     isAuth: boolean,
-    userPhoto: string | null,
+    userPhoto: UserProfileType[] | null,
 }
 
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         isAuth: state.auth.isAuth,
-        userPhoto: state.profilePage.photoUser
+        userPhoto: state.profilePage.profile,
     }
 }
 export default connect(mapStateToProps, {getAuth: getAuthThunkCreator, logout: logoutThunkCreator})(HeaderContainer)

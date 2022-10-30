@@ -25,7 +25,6 @@ type ProfileContainerType = {
     authorizedUserId: number
 }
 
-
 class ProfileContainer extends React.Component<any, ProfileContainerType> {
     componentDidMount() {
         let userId = this.props.match.params.userId

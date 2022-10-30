@@ -10,7 +10,7 @@ import {
     UsersType,
 } from "../../Redux/users-reducer";
 import {AppStateType} from "../../Redux/redux-store";
-import Users from "./Users";
+import {Users} from "./Users";
 import {Preloader} from "../common/preloader/Preloader";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";
 import {
@@ -41,15 +41,12 @@ type UsersContainerType = {
 }
 
 class UsersContainer extends React.Component<any, UsersContainerType> {                // ANY !!!!!!!!!!!!!
-
     componentDidMount() {
         this.props.getUsers(this.props.currentPage, this.props.pageSize)
     }
-
     onPageChanges = (pageNumber: number) => {
         this.props.getUsers(pageNumber, this.props.pageSize)
     }
-
     render() {
         return <>
             {this.props.isFetching
@@ -64,12 +61,10 @@ class UsersContainer extends React.Component<any, UsersContainerType> {         
                 currentPage={this.props.currentPage}
                 onPageChanges={this.onPageChanges}
                 followingDisable={this.props.followingDisable}
-
             />
         </>
     }
 }
-
 
 type MapStatePropsType = {
     users: UsersType[]
@@ -85,7 +80,6 @@ type MapDispatchPropsType = {
     setUsersTotalCount: (totalCount: number) => void,
     toggleIsFetching: (isFetching: boolean) => void,
 }
-
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         users: getUsers(state),
@@ -112,7 +106,6 @@ let mapDispatchToProps = (dispatch: Dispatch): MapDispatchPropsType => {
         }
     }
 }
-
 export default compose<React.ComponentType>(
     connect(mapStateToProps, {
         mapDispatchToProps,

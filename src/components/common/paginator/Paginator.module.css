@@ -1,0 +1,7 @@
+.pagesList span{
+    padding: 0 5px;
+    cursor: pointer;
+}
+.pageSelected{
+    font-weight: bold;
+}
