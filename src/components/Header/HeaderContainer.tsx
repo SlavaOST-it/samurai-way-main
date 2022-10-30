@@ -9,11 +9,6 @@ import {UserProfileType} from "../../Redux/profile-reducer";
 export type HeaderContainerType = MapStatePropsType & {getAuth: ()=>void}
 
 class HeaderContainer extends React.Component<any, HeaderContainerType> {
-    // componentDidMount() {
-    //     this.props.getAuth()
-    // }
-
-
     render() {
         return (
             <Header {...this.props}
@@ -25,12 +20,10 @@ class HeaderContainer extends React.Component<any, HeaderContainerType> {
     }
 }
 
-
 type MapStatePropsType = {
     isAuth: boolean,
     userPhoto: UserProfileType[] | null,
 }
-
 let mapStateToProps = (state: AppStateType): MapStatePropsType => {
     return {
         isAuth: state.auth.isAuth,

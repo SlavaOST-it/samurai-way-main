@@ -7,7 +7,7 @@ import {UserProfileType} from "../../Redux/profile-reducer";
 export type HeaderType = {
     isAuth: boolean,
     logout: () => void,
-    userPhoto: UserProfileType,
+    userPhoto: UserProfileType [],
 }
 
 const Header = (props: HeaderType) => {

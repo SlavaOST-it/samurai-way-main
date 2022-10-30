@@ -34,14 +34,12 @@ export type UserProfileType = {
         youtube: string | null,
         mainLink: string | null,
     },
-    photos: {
-        small: string | null,
-        // URL address of user photo (small size) (null if photo is not uploaded to the server)
-        large: string | null
-        // URL address of user photo (large size) (null if photo is not uploaded to the server)
-    }
+    photos: PhotoProfile
 }
-
+export type PhotoProfile = {
+    small: string | null,
+    large: string | null
+}
 export type ProfilePageType = {
     profile: UserProfileType[] | null,
     photoUser: string | null,
