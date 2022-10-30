@@ -13,11 +13,11 @@ export type HeaderType = {
 const Header = (props: HeaderType) => {
     const [userPhoto, setUserPhoto] = useState(photo)
 
-    useEffect(()=>{
-        if(props.userPhoto){
-            setUserPhoto(props.userPhoto)
-        }
-    },[props.userPhoto])
+    // useEffect(()=>{
+    //     if(props.userPhoto){
+    //         setUserPhoto(props.userPhoto)
+    //     }
+    // },[props.userPhoto])
 
 
     return (

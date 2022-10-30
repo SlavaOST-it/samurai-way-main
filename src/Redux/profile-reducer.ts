@@ -133,7 +133,6 @@ export const getProfileThunkCreator = (userId: number) => {
         profileAPI.getProfile(userId)
             .then((data) => {
                 dispatch(setUserProfileAC(data));
-                dispatch(setUserPhoto(data.response.photos.small))
             })
     }
 }

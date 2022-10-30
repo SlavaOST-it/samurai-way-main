@@ -4,34 +4,25 @@ import Post from "./Post/Post";
 import {PostsDataType} from "../../../Redux/profile-reducer";
 import {AddNewPostForm} from "./AddNewPostForm";
 
-
-
-
 type MyPostsType = {
     posts: PostsDataType[],
-    addPost: (newPostText: string)=>void
+    addPost: (newPostText: string) => void
 }
 
-
-const MyPosts = (props: MyPostsType) => {
+export const MyPosts = React.memo((props: MyPostsType) => {
     let messagesPost = props.posts.map(m => {
         return <Post key={m.id} message={m.message} like={m.likesCount}/>
     })
 
     return (
         <div className={s.myPosts}>
-            <h3>
-                My posts
-            </h3>
+            <h3>My posts</h3>
             <div className={s.newPost}>
                 <AddNewPostForm/>
             </div>
-
             <div className={s.posts}>
                 {messagesPost}
             </div>
         </div>
     );
-}
-
-export default MyPosts;
+})
