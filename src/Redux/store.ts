@@ -6,6 +6,7 @@ import {UsersActionsTypes, usersReducer} from "./users-reducer";
 import {AuthActionsTypes, authReducer} from "./auth-reducer";
 import thunkMiddleware, {ThunkAction, ThunkDispatch} from "redux-thunk"
 import {AppActionsTypes, appReducer} from "./app-reducer";
+import { composeWithDevTools } from '@redux-devtools/extension';
 
 
 export const rootReducer = combineReducers({
@@ -21,7 +22,9 @@ export const rootReducer = combineReducers({
 type ReduxActionType = AuthActionsTypes | UsersActionsTypes | ProfileActionsTypes | DialogsActionsTypes | AppActionsTypes
 
 
-export let store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
+export const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunkMiddleware)));  // composeWithDevTools - инструмент для браузера
+
+// export let store = createStore(rootReducer, applyMiddleware(thunkMiddleware))
 export type AppStateType = ReturnType<typeof rootReducer>
 export type RootState = ReturnType<typeof store.getState>
 
