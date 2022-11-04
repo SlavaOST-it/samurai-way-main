@@ -1,6 +1,6 @@
 import {Dispatch} from "redux";
 import {authAPI, LoginParamsType} from "../api/api";
-import {AppDispatch, AppThunk} from "./redux-store";
+import {AppDispatch, AppThunk} from "./store";
 import axios, {AxiosError} from "axios";
 
 

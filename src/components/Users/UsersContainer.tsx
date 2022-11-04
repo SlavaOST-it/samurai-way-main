@@ -9,7 +9,7 @@ import {
     setUsersTotalCountAC, toggleIsFetchingAC, unfollowThunkCreation,
     UsersType,
 } from "../../Redux/users-reducer";
-import {AppStateType} from "../../Redux/redux-store";
+import {AppStateType} from "../../Redux/store";
 import {Users} from "./Users";
 import {Preloader} from "../common/preloader/Preloader";
 import {withAuthRedirect} from "../../hoc/withAuthRedirect";

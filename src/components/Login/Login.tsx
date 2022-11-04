@@ -3,7 +3,7 @@ import s from './Login.module.css'
 import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
 import {loginThunkCreator} from "../../Redux/auth-reducer";
-import {AppStateType} from "../../Redux/redux-store";
+import {AppStateType} from "../../Redux/store";
 import {Redirect} from "react-router-dom";
 
 export type FormDataType = {

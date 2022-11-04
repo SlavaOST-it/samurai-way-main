@@ -13,7 +13,7 @@ import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
 import {Login} from "./components/Login/Login";
 import {useDispatch, useSelector} from "react-redux";
-import {AppStateType} from "./Redux/redux-store";
+import {AppStateType} from "./Redux/store";
 import {initializeAppTC} from "./Redux/app-reducer";
 import {Preloader} from "./components/common/preloader/Preloader";
 

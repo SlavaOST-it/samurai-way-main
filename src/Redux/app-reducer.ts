@@ -1,4 +1,4 @@
-import {AppDispatch} from "./redux-store";
+import {AppDispatch} from "./store";
 import {getAuthThunkCreator} from "./auth-reducer";
 
 export type SetInitializedAT = ReturnType<typeof setInitializedAC>

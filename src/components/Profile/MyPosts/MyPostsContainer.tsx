@@ -3,7 +3,7 @@ import {addPostAC, PostsDataType} from "../../../Redux/profile-reducer";
 import {MyPosts} from "./MyPosts";
 import {connect} from "react-redux";
 import {Dispatch} from "redux";
-import {AppStateType} from "../../../Redux/redux-store";
+import {AppStateType} from "../../../Redux/store";
 
 
 export type MapStateToPropsType = {
