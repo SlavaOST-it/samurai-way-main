@@ -5,7 +5,7 @@ import axios, {AxiosError} from "axios";
 export type AddPostAT = ReturnType<typeof addPostAC>
 export type SetUserProfileAT = ReturnType<typeof setUserProfileAC>
 export type SetUserStatusAT = ReturnType<typeof setUserStatusAC>
-export type SetUserPhotoAT = ReturnType<typeof setUserPhoto>
+export type SetUserPhotoAT = ReturnType<typeof setUserPhotoAC>
 export type ProfileActionsTypes =
     | AddPostAT
     | SetUserProfileAT
@@ -100,7 +100,7 @@ export const profileReducer = (state: ProfilePageType = initialState, action: Pr
 export const addPostAC = (postText: string) => ({type: "PROFILE/ADD-POST", postText} as const)
 export const setUserProfileAC = (profile: UserProfileType[]) => ({type: "PROFILE/SET-USER-PROFILE", profile} as const)
 export const setUserStatusAC = (status: string) => ({type: "PROFILE/SET-USER-STATUS", status} as const)
-export const setUserPhoto = (photo: string) => ({type: "PROFILE/SET-USER-PHOTO", photo} as const)
+export const setUserPhotoAC = (photo: string) => ({type: "PROFILE/SET-USER-PHOTO", photo} as const)
 
 // ==================THUNK CREATORS =======================//
 export const getProfileThunkCreator = (userId: number) => async (dispatch: Dispatch<ProfileActionsTypes>) => {
@@ -147,11 +147,11 @@ export const updateStatusThunkCreator = (status: string) => async (dispatch: Dis
         }
     }
 }
-export const updatePhotoUser = (photo: string) => async (dispatch: Dispatch<ProfileActionsTypes>) => {
+export const updatePhotoUserThunkCreator = (photo: string) => async (dispatch: Dispatch<ProfileActionsTypes>) => {
     try {
         let res = await profileAPI.updatePhoto(photo)
         if (res.resultCode === 0) {
-            dispatch(setUserPhoto(res.response.photos.small))
+            dispatch(setUserPhotoAC(res.photos))
         }
     } catch (e) {
         const err = e as Error | AxiosError

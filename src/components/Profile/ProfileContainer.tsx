@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {AppStateType} from "../../Redux/store";
 import {
     getProfileThunkCreator,
-    getStatusThunkCreator,
+    getStatusThunkCreator, updatePhotoUserThunkCreator,
     updateStatusThunkCreator,
     UserProfileType
 } from "../../Redux/profile-reducer";
@@ -23,26 +23,38 @@ type ProfileContainerType = {
     updateStatus: (status: string) => void,
     isAuth: boolean,
     authorizedUserId: number
+    savePhoto: (photo: string) => void
 }
 
 class ProfileContainer extends React.Component<any, ProfileContainerType> {
-    componentDidMount() {
+    refreshProfile (){
         let userId = this.props.match.params.userId
         if (!userId) {
             userId = 25342                                                     //=== HARD CODE !!!!!! ===//
         }
         this.props.getProfile(userId)
         this.props.getStatus(userId)
+    }
 
+    componentDidMount() {
+        this.refreshProfile()
+    }
+
+    componentDidUpdate(prevProps: Readonly<ProfileContainerType>, prevState: Readonly<ProfileContainerType>, snapshot?: any) {
+        if(this.props.match.params.userId != this.props.match.params.userId){
+            this.refreshProfile()
+        }
     }
 
     render() {
         return (
             <Profile
                 {...this.props}
+                isOwner={!this.props.match.params.userId}
                 profile={this.props.profile}
                 status={this.props.status}
                 updateStatus={this.props.updateStatus}
+                savePhoto={this.props.savePhoto}
             />
         );
     }
@@ -68,7 +80,8 @@ export default compose<React.ComponentType>(
         {
             getProfile: getProfileThunkCreator,
             getStatus: getStatusThunkCreator,
-            updateStatus: updateStatusThunkCreator
+            updateStatus: updateStatusThunkCreator,
+            savePhoto: updatePhotoUserThunkCreator,
         },
     ),
     withRouter,

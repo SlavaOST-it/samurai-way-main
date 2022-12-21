@@ -9,13 +9,17 @@ export type ProfileType = {
     profile: UserProfileType,
     status: string,
     updateStatus: (status: string) => void
+    isOwner: boolean
+    savePhoto: (photo: string) => void
 }
 
 export const Profile: React.FC<ProfileType> = (
     {
         profile,
         status,
-        updateStatus
+        updateStatus,
+        isOwner,
+        savePhoto
     }) => {
 
 
@@ -26,6 +30,8 @@ export const Profile: React.FC<ProfileType> = (
                     profile={profile}
                     status={status}
                     updateStatus={updateStatus}
+                    isOwner={isOwner}
+                    savePhoto={savePhoto}
                 />
             </div>
             <div className={s.my_posts}>

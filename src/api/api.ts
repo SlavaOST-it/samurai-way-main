@@ -49,7 +49,13 @@ export const profileAPI = {
             })
     },
     updatePhoto(photo: string) {
-        return instance.put(`/profile/photo`, {photo})
+        let formData = new FormData();
+        formData.append('image', photo)
+        return instance.put(`/profile/photo`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        })
             .then(response =>{
                 return response.data
             })
