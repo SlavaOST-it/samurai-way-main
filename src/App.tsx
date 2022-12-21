@@ -7,7 +7,6 @@ import News from "./components/News/News";
 import Music from "./components/Music/Music";
 import Settings from "./components/Settings/Settings";
 import SideBar from "./components/Navbar/SideBar";
-import DialogsContainer from "./components/Dialogs/DialogsContainer";
 import UsersContainer from "./components/Users/UsersContainer";
 import ProfileContainer from "./components/Profile/ProfileContainer";
 import HeaderContainer from "./components/Header/HeaderContainer";
@@ -16,7 +15,10 @@ import {useDispatch, useSelector} from "react-redux";
 import {AppStateType} from "./Redux/store";
 import {initializeAppTC} from "./Redux/app-reducer";
 import {Preloader} from "./components/common/preloader/Preloader";
+import {withSuspense} from "./hoc/withSuspense";
 
+
+const DialogsContainer = React.lazy(() => import('./components/Dialogs/DialogsContainer'))
 
 const App = () => {
     const isInitialized = useSelector<AppStateType, boolean>(state => state.app.isInitialized)
@@ -26,7 +28,7 @@ const App = () => {
         dispatch(initializeAppTC())
     }, [])
 
-    if(!isInitialized){
+    if (!isInitialized) {
         return <Preloader/>
     }
 
@@ -41,7 +43,8 @@ const App = () => {
                            render={() => <ProfileContainer/>}/>
 
                     <Route path='/dialogs'
-                           render={() => <DialogsContainer/>}/>
+                           // используем HOC
+                           render={withSuspense(DialogsContainer)}/>
 
                     <Route path='/news' render={() => <News/>}/>
                     <Route path='/music' render={() => <Music/>}/>
